@@ -1,51 +1,49 @@
 /* You can add global styles to this file, and also import other style files */
 @use '~@angular/material' as mat;
-
-
+@use 'sass:map';
 @import '~@angular/material/theming';
-
 @include mat.core();
+@import "./themes/cyan-teal";
+@import "./themes/purple-teal";
+@import "./themes/indigo-pink";
+@import "./themes/pink-bluegrey";
+@import "./themes/deeppurple-amber";
+@import "./themes/purple-green";
 
-$light-primary: mat.define-palette(mat.$cyan-palette, 600, 400, 800);
-$light-accent: mat.define-palette(mat.$teal-palette, 500, 300, 700);
-$light-warn: mat.define-palette(mat.$red-palette);
+@mixin all-theme-and-custom-component($theme) {
+  //$_background: map.get($theme, background);
+  //$app-background-color: map.get($_background, background);
 
-$light-theme: mat.define-light-theme((
- color: (
-   primary: $light-primary,
-   accent: $light-accent,
-   warn: $light-warn)
- ));
+  @include mat.all-component-themes($theme);
 
-$dark-primary: mat.define-palette(mat.$purple-palette, 300, 200, 500);
-$dark-accent: mat.define-palette(mat.$teal-palette, 500, 300, 700);
-$dark-warn: mat.define-palette(mat.$red-palette);
-
-$dark-theme: mat.define-dark-theme((
-  color: (
-    primary: $dark-primary,
-    accent: $dark-accent,
-    warn: $dark-warn)
-));
-
-@mixin body-theme($theme) {
-  $_background: map-get($theme, background);
-  $app-background-color: mat-color($_background, background);
-
-  body {
-    background-color: $app-background-color;
-  }
+  /*
+   * additional custom component themes here
+   */
+  //body {
+  //  background-color: $app-background-color;
+  //}
 }
 
-mat.$theme-ignore-duplication-warnings: true;
-
-.light-theme {
-  @include mat.all-component-themes($light-theme);
-  @include body-theme($light-theme);
+.deeppurple-amber {
+@include all-theme-and-custom-component($deeppurple-amber);
 }
-.dark-theme {
-  @include mat.all-component-themes($dark-theme);
-  @include body-theme($dark-theme);
+
+.indigo-pink {
+  @include all-theme-and-custom-component($indigo-pink);
+}
+.pink-bluegrey {
+  @include all-theme-and-custom-component($pink-bluegrey);
+}
+
+.purple-green {
+  @include all-theme-and-custom-component($purple-green);
+}
+
+.cyan-teal {
+  @include all-theme-and-custom-component($cyan-teal);
+}
+.purple-teal {
+  @include all-theme-and-custom-component($purple-teal);
 }
 
 html, body { height: 100%; }

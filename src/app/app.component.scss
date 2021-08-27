@@ -1,8 +1,9 @@
-.example-card {
-  max-width: 400px;
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
-
-.example-header-image {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-  background-size: cover;
+.container {
+  margin-top: 64px;
+  height: calc(100vh - 64px);
 }

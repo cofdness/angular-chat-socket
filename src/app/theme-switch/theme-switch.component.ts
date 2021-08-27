@@ -1,6 +1,7 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import {DOCUMENT} from "@angular/common";
+import {ThemeOption} from "../theme-option";
+import {ThemeService} from "../theme.service";
 
 @Component({
   selector: 'app-theme-switch',
@@ -8,26 +9,33 @@ import {DOCUMENT} from "@angular/common";
   styleUrls: ['./theme-switch.component.scss']
 })
 export class ThemeSwitchComponent implements OnInit {
-  // theme: string
 
-  // array of theme name
-  appThemes = ['light-theme', 'dark-theme']
+  themeOptions!: Array<ThemeOption>
+  activeTheme!: ThemeOption
 
-  constructor(@Inject(DOCUMENT) private document: Document) {
+  constructor(
+    private themeService: ThemeService
+  ) {
+    this.themeService.getThemeOption().subscribe(themeOptions => {
+      this.themeOptions = themeOptions
+      this.activeTheme = this.themeOptions[0]
+
+      //default theme
+      document.documentElement.classList.add(this.activeTheme.value);
+    })
   }
 
   ngOnInit(): void {
-    //default theme is light
-    this.document.documentElement.classList.add(this.appThemes[0]);
   }
 
-  onChangeTheme(theme: string) {
-    this.appThemes.forEach(appTheme => {
-      if (this.document.documentElement.classList.contains(appTheme)) {
-        this.document.documentElement.classList.remove(appTheme)
+  onChangeTheme(themeOption: ThemeOption) {
+    this.activeTheme = themeOption
+    this.themeOptions.forEach(themeOption => {
+      if (document.documentElement.classList.contains(themeOption.value)) {
+        document.documentElement.classList.remove(themeOption.value)
       }
     })
-    this.document.documentElement.classList.add(theme)
+    document.documentElement.classList.add(this.activeTheme.value)
   }
 
 }
