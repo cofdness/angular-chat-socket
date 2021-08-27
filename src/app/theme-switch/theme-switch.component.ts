@@ -14,9 +14,9 @@ export class ThemeSwitchComponent implements OnInit {
   activeTheme!: ThemeOption
 
   constructor(
-    private themeService: ThemeService
+    private themeService: ThemeService,
   ) {
-    this.themeService.getThemeOption().subscribe(themeOptions => {
+    this.themeService.getThemeOptions().subscribe(themeOptions => {
       this.themeOptions = themeOptions
       this.activeTheme = this.themeOptions[0]
 
@@ -30,12 +30,7 @@ export class ThemeSwitchComponent implements OnInit {
 
   onChangeTheme(themeOption: ThemeOption) {
     this.activeTheme = themeOption
-    this.themeOptions.forEach(themeOption => {
-      if (document.documentElement.classList.contains(themeOption.value)) {
-        document.documentElement.classList.remove(themeOption.value)
-      }
-    })
-    document.documentElement.classList.add(this.activeTheme.value)
+    this.themeService.setTheme(themeOption)
   }
 
 }

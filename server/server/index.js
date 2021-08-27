@@ -2,7 +2,7 @@ import http from "http";
 import express from "express";
 import logger from "morgan";
 import cors from "cors";
-import socketio from "socket.io";
+import { Server } from 'socket.io'
 // mongo connection
 import "./config/mongo.js";
 // socket configuration
@@ -19,6 +19,7 @@ const app = express();
 
 /** Get port from environment and store in Express. */
 const port = process.env.PORT || "3000";
+const host = process.env.IP || "0.0.0.0";
 app.set("port", port);
 
 app.use(logger("dev"));
@@ -41,11 +42,16 @@ app.use('*', (req, res) => {
 /** Create HTTP server. */
 const server = http.createServer(app);
 /** Create socket connection */
-global.io = socketio.listen(server);
+global.io = new Server(server, {
+  cors: {
+    origin: '*',
+    method: ['GET', 'POST']
+  }
+})
 global.io.on('connection', WebSockets.connection)
 /** Listen on provided port, on all network interfaces. */
-server.listen(port);
+server.listen(port, host);
 /** Event listener for HTTP server "listening" event. */
 server.on("listening", () => {
-  console.log(`Listening on port:: http://localhost:${port}/`)
+  console.log(`Listening on port:: http://${host}:${port}/`)
 });
