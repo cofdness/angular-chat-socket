@@ -17,6 +17,6 @@ export class NavbarComponent implements OnInit {
   }
 
   sidebarToggle() {
-    this.sidebarService.toggleSidebar()
+    this.sidebarService.toggleSidebar(true)
   }
 }
