@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ThemeService} from "../theme.service";
-import {Observable} from "rxjs";
-import {ThemeOption} from "../theme-option";
+import {SidebarService} from "../sidebar.service";
 
 @Component({
   selector: 'app-navbar',
@@ -10,10 +8,15 @@ import {ThemeOption} from "../theme-option";
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private readonly themeService: ThemeService) {
+  constructor (
+    public sidebarService: SidebarService
+  ) {
   }
 
   ngOnInit(): void {
   }
 
+  sidebarToggle() {
+    this.sidebarService.toggleSidebar()
+  }
 }

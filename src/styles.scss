@@ -48,3 +48,7 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+div.mat-list-item-content {
+  padding-left: 24px !important;
+}

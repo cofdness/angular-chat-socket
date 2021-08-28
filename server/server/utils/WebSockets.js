@@ -4,7 +4,9 @@ class WebSockets {
     console.log('socket.io connected')
     // event fired when the chat room is disconnected
     client.on("disconnect", () => {
-      // this.users = this.users.filter((user) => user.socketId !== client.id);
+      if (this.users) {
+        this.users = this.users.filter((user) => user.socketId !== client.id);
+      }
     });
     // add identity of user mapped to the socket id
     client.on("identity", (userId) => {
