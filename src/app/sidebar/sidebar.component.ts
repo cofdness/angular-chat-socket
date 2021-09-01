@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import {SidebarService} from "../sidebar.service";
+import {SidebarService} from '../sidebar.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,11 +7,6 @@ import {SidebarService} from "../sidebar.service";
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-
-
-  ngOnInit(): void {
-  }
-
   fillerNav = Array.from({length: 50}, (_, i) => `Nav Item ${i + 1}`);
 
   fillerContent = Array.from({length: 50}, () =>
@@ -23,5 +18,10 @@ export class SidebarComponent implements OnInit {
 
   constructor(public sidebarService: SidebarService) {
   }
+
+  ngOnInit(): void {
+  }
+
+
 
 }

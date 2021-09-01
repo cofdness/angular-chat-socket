@@ -53,7 +53,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 
 
-const AllMaterialModules = [
+const allMaterialModules = [
   MatAutocompleteModule,
   MatCheckboxModule,
   MatDatepickerModule,
@@ -93,7 +93,9 @@ const AllMaterialModules = [
 ];
 
 @NgModule({
-  imports: [AllMaterialModules],
-  exports: [AllMaterialModules],
+  imports: [allMaterialModules],
+  exports: [allMaterialModules],
+  declarations: [
+  ]
 })
 export class MaterialModule {}

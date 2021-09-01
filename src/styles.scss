@@ -52,3 +52,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 div.mat-list-item-content {
   padding-left: 24px !important;
 }
+
+@media (max-width: 599px) {
+mat-toolbar.mat-toolbar-row, mat-toolbar.mat-toolbar-single-row {
+    height: 64px !important;
+  }
+}
