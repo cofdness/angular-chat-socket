@@ -1,6 +1,7 @@
-# AngularChatSocket
+# Angular IONIC multiplatform
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.2.
+This project implement multiplatform support IOS, Android, Web
+use angular, angular material
 
 ## Development server
 
@@ -22,6 +23,8 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
+# Android
+
 ## Android debug
 
 Run `ionic capacitor run android`
@@ -33,6 +36,14 @@ Run `ionic capacitor copy android`
 ## Live reload
 
 Run `ionic capacitor run android -l --host=YOUR_IP_ADDRESS`
+
+# IOS
+
+## IOS run
+
+Run `ionic capacitor run ios `
+
+More info take a look at https://ionicframework.com/docs/developing/ios
 
 ## Further help
 
