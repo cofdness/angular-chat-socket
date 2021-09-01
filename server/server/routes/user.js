@@ -1,8 +1,10 @@
 import express from 'express';
 // controllers
 import user from '../controllers/user.js';
+import {userSchema} from "../models/User";
 
 const router = express.Router();
+const {email, password, name, picture, role} = userSchema.tree
 
 router
   .get('/', user.onGetAllUsers)

@@ -1,53 +1,52 @@
 // utils
 import makeValidation from '@withvoid/make-validation';
 // models
-import UserModel, { USER_TYPES } from '../models/User.js';
+import UserModel, { roles } from '../models/User.js';
+import {success, notSuccess} from "../service/response";
 
 export default {
-  onGetAllUsers: async (req, res) => {
+  onGetAllUsers: async ({querymen: {query, select, cursor}}, res, next) => {
     try {
-      const users = await UserModel.getUsers();
-      return res.status(200).json({ success: true, users });
+      const users = await UserModel.find(query, select, cursor).map(user => user.view());
+      success(res, users)
     } catch (error) {
-      return res.status(500).json({ success: false, error: error })
+      next(error)
     }
   },
-  onGetUserById: async (req, res) => {
+  onGetUserById: async ({params}, res, next) => {
     try {
-      const user = await UserModel.getUserById(req.params.id);
-      return res.status(200).json({ success: true, user });
+      const user = await UserModel.findById(params.id);
+      success(res, user)
     } catch (error) {
-      return res.status(500).json({ success: false, error: error })
+      next(error)
     }
   },
-  onCreateUser: async (req, res) => {
+  onCreateUser: async ({bodymen: {body}}, res, next) => {
     try {
-      const validation = makeValidation(types => ({
-        payload: req.body,
-        checks: {
-          firstName: { type: types.string },
-          lastName: { type: types.string },
-          type: { type: types.enum, options: { enum: USER_TYPES } },
-        }
-      }));
-      if (!validation.success) return res.status(400).json({ ...validation });
-
-      const { firstName, lastName, type } = req.body;
-      const user = await UserModel.createUser(firstName, lastName, type);
-      return res.status(200).json({ success: true, user });
+      const user = await UserModel.create(body);
+      success(res, user)
     } catch (error) {
-      return res.status(500).json({ success: false, error: error })
+      if (err.name === 'MongoError' && err.code === 11000) {
+        res.status(409).json({
+          valid: false,
+          param: 'email',
+          message: 'email already registered'
+        })
+      } else {
+        next(error)
+      }
     }
   },
-  onDeleteUserById: async (req, res) => {
+  onDeleteUserById: async ({params}, res, next) => {
     try {
-      const user = await UserModel.deleteByUserById(req.params.id);
-      return res.status(200).json({ 
-        success: true, 
-        message: `Deleted a count of ${user.deletedCount} user.` 
-      });
+      const user = await UserModel.findById(params.id);
+      await user.remove()
+      success(res, {
+        success: true,
+        message: `Deleted a count of ${user.deletedCount} user.`
+      })
     } catch (error) {
-      return res.status(500).json({ success: false, error: error })
+      next(error)
     }
   },
 }

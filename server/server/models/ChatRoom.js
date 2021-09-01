@@ -8,10 +8,6 @@ export const CHAT_ROOM_TYPES = {
 
 const chatRoomSchema = new mongoose.Schema(
   {
-    _id: {
-      type: String,
-      default: () => uuidv4().replace(/\-/g, ""),
-    },
     userIds: Array,
     type: String,
     chatInitiator: String,

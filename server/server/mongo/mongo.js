@@ -1,12 +1,26 @@
 import mongoose from 'mongoose'
 import config from './index.js'
+import {mongo} from "../config";
+
+mongoose.Types.ObjectId.prototype.view = function () {
+  return { id: this.toString() }
+}
 
 const CONNECTION_URL = `mongodb+srv://${config.db.url}/${config.db.name}`
 
-mongoose.connect(CONNECTION_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+main().catch(err => console.log(err))
+
+async function main() {
+  await mongoose.connect(CONNECTION_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+}
+
+// mongoose.connect(CONNECTION_URL, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// })
 
 mongoose.connection.on('connected', () => {
   console.log('Mongo has connected succesfully')
