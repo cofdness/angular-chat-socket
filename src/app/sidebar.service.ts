@@ -7,15 +7,17 @@ import {MediaMatcher} from "@angular/cdk/layout";
 export class SidebarService implements OnDestroy{
 
   mobileQuery: MediaQueryList;
-  sidebarOpen = false
+  sidebarOpen = true
 
-  private readonly _mobileQueryListener: () => void;
+  private readonly _mobileQueryListener: (event) => void;
 
   constructor(appRef: ApplicationRef , media: MediaMatcher) {
     this.mobileQuery = media.matchMedia('(max-width: 960px)');
-    this._mobileQueryListener = () => {
-      if (this.mobileQuery.matches) {
+    this._mobileQueryListener = (event) => {
+      if (event.matches) {
         this.sidebarOpen = false
+      } else {
+        this.sidebarOpen = true
       }
       return appRef.tick()
     };
@@ -26,9 +28,7 @@ export class SidebarService implements OnDestroy{
     // in small screen, user click on screen to make the sidebar nav close,
     // so we must check it
     if (toggleFromSidebar) {
-      if (this.mobileQuery.matches) {
         this.sidebarOpen = !this.sidebarOpen
-      }
     }
     else {
       this.sidebarOpen = false

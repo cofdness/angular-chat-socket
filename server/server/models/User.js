@@ -6,7 +6,7 @@ import bcrypt from "bcrypt"
 //   CONSUMER: "consumer",
 //   SUPPORT: "support",
 // };
-export const roles = ['consumer', 'support']
+export const roles = ['admin', 'support', 'consumer']
 
 const userSchema = new mongoose.Schema(
   {
