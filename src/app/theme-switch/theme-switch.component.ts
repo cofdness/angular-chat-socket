@@ -10,18 +10,16 @@ import {ThemeService} from '../theme.service';
 })
 export class ThemeSwitchComponent implements OnInit {
 
-  themeOptions!: Array<ThemeOption>;
   activeTheme!: ThemeOption;
 
   constructor(
     private themeService: ThemeService,
   ) {
-    this.themeService.getThemeOptions().subscribe(themeOptions => {
-      this.themeOptions = themeOptions;
-      this.activeTheme = this.themeOptions[0];
+    this.themeService.getThemeOptions().subscribe(() => {
+      this.activeTheme = this.themeService.themeOptions[0];
 
       //default theme
-      this.themeService.setTheme(this.activeTheme)
+      this.themeService.setTheme(this.activeTheme);
     });
   }
 

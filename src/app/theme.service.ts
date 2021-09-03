@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {ThemeOption} from './theme-option';
 import {DOCUMENT} from '@angular/common';
+import {tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +15,10 @@ export class ThemeService {
     private http: HttpClient,
     @Inject(DOCUMENT) private document: Document
   ) {
-    this.getThemeOptions().subscribe(themeOptions => {
-        this.themeOptions = themeOptions;
-      }
-    );
   }
 
   getThemeOptions(): Observable<Array<ThemeOption>>{
-    return this.http.get<Array<ThemeOption>>('assets/theme-options.json');
+    return this.http.get<Array<ThemeOption>>('assets/theme-options.json').pipe(tap(themeOptions => this.themeOptions = themeOptions));
   }
 
   setTheme(themeOption: ThemeOption) {

@@ -4,7 +4,7 @@
 
 <mat-menu #menu="matMenu">
   <button
-    *ngFor="let option of themeOptions"
+    *ngFor="let option of themeService.themeOptions"
     mat-menu-item
     (click)="onChangeTheme(option)">
     <mat-icon color="accent">{{option.id === activeTheme.id ? 'radio_button_checked' : 'radio_button_unchecked'}}</mat-icon>

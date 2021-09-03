@@ -1,17 +1,18 @@
-import {ApplicationRef, ChangeDetectorRef, Injectable, OnDestroy} from '@angular/core';
-import {MediaMatcher} from "@angular/cdk/layout";
+import {ApplicationRef, ChangeDetectorRef, Injectable, OnDestroy, OnInit} from '@angular/core';
+import {MediaMatcher} from '@angular/cdk/layout';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SidebarService implements OnDestroy{
+export class SidebarService implements OnInit, OnDestroy{
 
   mobileQuery: MediaQueryList;
-  sidebarOpen = true
+  sidebarOpen = false
 
   private readonly _mobileQueryListener: (event) => void;
 
   constructor(appRef: ApplicationRef , media: MediaMatcher) {
+
     this.mobileQuery = media.matchMedia('(max-width: 960px)');
     this._mobileQueryListener = (event) => {
       if (event.matches) {
@@ -24,10 +25,10 @@ export class SidebarService implements OnDestroy{
     this.mobileQuery.addEventListener('change', this._mobileQueryListener)
   }
 
-  toggleSidebar(toggleFromSidebar: boolean) {
+  toggleSidebar(toggleFromTopBar: boolean) {
     // in small screen, user click on screen to make the sidebar nav close,
     // so we must check it
-    if (toggleFromSidebar) {
+    if (toggleFromTopBar) {
         this.sidebarOpen = !this.sidebarOpen
     }
     else {
@@ -38,6 +39,9 @@ export class SidebarService implements OnDestroy{
 
   ngOnDestroy(): void {
     this.mobileQuery.removeEventListener('change', this._mobileQueryListener);
+  }
+
+  ngOnInit(): void {
   }
 
 }
