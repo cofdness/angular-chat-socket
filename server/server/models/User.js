@@ -1,11 +1,8 @@
 import mongoose from "mongoose";
 import crypto from "crypto";
 import bcrypt from "bcrypt"
+import {env} from '../config'
 
-// export const USER_TYPES = {
-//   CONSUMER: "consumer",
-//   SUPPORT: "support",
-// };
 export const roles = ['admin', 'support', 'consumer']
 
 const userSchema = new mongoose.Schema(
@@ -35,8 +32,9 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: roles,
-      default: 'user'
+      default: 'support'
     },
+    friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
   },
   {
     timestamps: true,
@@ -68,74 +66,6 @@ userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, rounds)
 })
 
-/**
- * @param {String} email
- * @param {String} password
- * @param {String} name
- * @param {String} role
- * @returns {Object} new user object created
- */
-// userSchema.statics.createUser = async function (firstName, lastName, type) {
-//   try {
-//     const user = await this.create({ firstName, lastName, type });
-//     return user;
-//   } catch (error) {
-//     throw error;
-//   }
-// }
-//
-// /**
-//  * @param {String} id, user id
-//  * @return {Object} User profile object
-//  */
-// userSchema.statics.getUserById = async function (id) {
-//   try {
-//     const user = await this.findOne({ _id: id });
-//     if (!user) throw ({ error: 'No user with this id found' });
-//     return user;
-//   } catch (error) {
-//     throw error;
-//   }
-// }
-//
-// /**
-//  * @return {Array} List of all users
-//  */
-// userSchema.statics.getUsers = async function () {
-//   try {
-//     const users = await this.find();
-//     return users;
-//   } catch (error) {
-//     throw error;
-//   }
-// }
-//
-// /**
-//  * @param {Array} ids, string of user ids
-//  * @return {Array of Objects} users list
-//  */
-// userSchema.statics.getUserByIds = async function (ids) {
-//   try {
-//     const users = await this.find({ _id: { $in: ids } });
-//     return users;
-//   } catch (error) {
-//     throw error;
-//   }
-// }
-//
-// /**
-//  * @param {String} id - id of user
-//  * @return {Object} - details of action performed
-//  */
-// userSchema.statics.deleteByUserById = async function (id) {
-//   try {
-//     const result = await this.remove({ _id: id });
-//     return result;
-//   } catch (error) {
-//     throw error;
-//   }
-// }
-
 userSchema.statics = {
   roles
 }
@@ -146,8 +76,10 @@ userSchema.methods = {
     let fields = ['id', 'name', 'picture']
 
     if (full) {
-      fields = [...fields, 'email', 'createAt']
+      fields = [...fields, 'email', 'createAt', 'friends']
     }
+
+    fields.forEach((field) => { view[field] = this[field] })
     return view
   },
 
@@ -158,5 +90,5 @@ userSchema.methods = {
 
 const model = mongoose.model('User', userSchema)
 
-export const userSchema = model.schema
+export const schema = model.schema
 export default model

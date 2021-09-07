@@ -1,10 +1,12 @@
 import http from "http";
 import express from "express";
-import logger from "morgan";
+import morgan from "morgan";
 import cors from "cors";
+import {errorHandler as queryErrorHandler} from 'querymen'
+import {errorHandler as bodyErrorHandler} from 'bodymen'
 import { Server } from 'socket.io'
 // mongo connection
-import "./mongo/mongo.js";
+import "./mongo";
 // socket configuration
 import WebSockets from "./utils/WebSockets.js";
 // routes
@@ -24,9 +26,12 @@ const app = express();
 /** Get port from environment and store in Express. */
 app.set("port", port);
 
-app.use(logger("dev"));
+app.use(cors())
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(queryErrorHandler())
+app.use(bodyErrorHandler())
 
 app.use("/", indexRouter);
 app.use("/users", userRouter);

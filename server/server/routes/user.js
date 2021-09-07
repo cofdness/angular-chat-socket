@@ -1,8 +1,9 @@
 import express from 'express';
 // controllers
 import user from '../controllers/user.js';
-import {userSchema} from "../models/User";
+import {schema as userSchema} from "../models/User";
 import {middleware as body} from 'bodymen'
+import {password as passwordAuth, master, token} from "../service/passport";
 
 const router = express.Router();
 const {email, password, name, picture, role} = userSchema.tree
@@ -19,9 +20,25 @@ const {email, password, name, picture, role} = userSchema.tree
  */
 router.get('/', token({required: true, roles: ['admin']}), user.onGetAllUsers)
 
-router.post('/', body({email, password, name, picture, role}) , user.onCreateUser)
+/*
+ * @api {post} /users Create user
+ * @apiName CreateUser
+ * @apiGroup User
+ * @apiPermission master
+ * @apiParam {String} access_token Master access_token.
+ * @apiParam {String} email User's email.
+ * @apiParam {String{6..}} password User's password.
+ * @apiParam {String} [name] User's name.
+ * @apiParam {String} [picture] User's picture.
+ * @apiParam {String=user,admin} [role=user] User's role.
+ * @apiSuccess (Sucess 201) {Object} user User's data.
+ * @apiError {Object} 400 Some parameters may contain invalid values.
+ * @apiError 401 Master access only.
+ * @apiError 409 Email already registered.
+ */
+router.post('/', master(), body({email, password, name, picture, role}) , user.onCreateUser)
 
-router.get('/:id', user.onGetUserById)
+router.get('/:id', token({required: true}), user.onGetUserById)
 
 router.delete('/:id', user.onDeleteUserById)
 

@@ -10,6 +10,7 @@
   "dependencies": {
     "@withvoid/make-validation": "^1.0.5",
     "bcrypt": "^5.0.1",
+    "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "bodymen": "^1.1.1",
     "cors": "2.8.5",
@@ -18,6 +19,9 @@
     "mongoose": "6.0.2",
     "morgan": "1.10.0",
     "passport": "^0.4.1",
+    "passport-http": "^0.3.0",
+    "passport-http-bearer": "^1.0.1",
+    "passport-jwt": "^4.0.0",
     "querymen": "^2.1.4",
     "socket.io": "^4.1.3",
     "uuid": "8.3.2"
