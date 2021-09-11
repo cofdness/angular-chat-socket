@@ -5,8 +5,8 @@ import {sign} from "../service/jwt";
 const userController = {
   onGetAllUsers: async ({querymen: {query, select, cursor}}, res, next) => {
     try {
-      const users = await UserModel.find(query, select, cursor).populate('friends').map(user => user.view());
-      res.status(200).json(users)
+      const users = await UserModel.find(query, select, cursor).populate('friends');
+      res.status(200).json(users.map(user => user.view(true)))
       return null
     } catch (error) {
       next(error)
@@ -14,9 +14,8 @@ const userController = {
   },
   onGetUserById: async ({params}, res, next) => {
     try {
-      const user = await UserModel.findById(params.id);
-      console.log(user)
-      res.status(200).json(user)
+      const user = await UserModel.findById(params.id).populate('friends');
+      res.status(200).json(user.view(true))
       return null
     } catch (error) {
       next(error)
@@ -40,6 +39,12 @@ const userController = {
             next(err)
           }
     }
+  },
+  onShowMe: async ({ user }, res) => {
+    res.json(user)
+  },
+  onUpdateUser: async ({ bodymen: { body }, params, user }, res, next) => {
+    UserModel.findByIdAndUpdate()
   },
   onDeleteUserById: async ({params}, res, next) => {
     try {

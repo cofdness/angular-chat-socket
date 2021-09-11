@@ -3,6 +3,7 @@ import express from 'express';
 import user from '../controllers/user.js';
 import {schema as userSchema} from "../models/User";
 import {middleware as body} from 'bodymen'
+import {middleware as query} from 'querymen'
 import {password as passwordAuth, master, token} from "../service/passport";
 
 const router = express.Router();
@@ -18,7 +19,7 @@ const {email, password, name, picture, role} = userSchema.tree
  * @apiError {Object} 400 Some parameters may contain invalid values.
  * @apiError 401 Admin access only.
  */
-router.get('/', token({required: true, roles: ['admin']}), user.onGetAllUsers)
+router.get('/', token({required: true, roles: ['admin']}), query(), user.onGetAllUsers)
 
 /*
  * @api {post} /users Create user
@@ -38,6 +39,25 @@ router.get('/', token({required: true, roles: ['admin']}), user.onGetAllUsers)
  */
 router.post('/', master(), body({email, password, name, picture, role}) , user.onCreateUser)
 
+/**
+ * @api {get} /users/me Retrieve current user
+ * @apiName RetrieveCurrentUser
+ * @apiGroup User
+ * @apiPermission user
+ * @apiParam {String} access_token User access_token.
+ * @apiSuccess {Object} user User's data.
+ */
+router.get('/me', token({ required: true }), user.onShowMe)
+
+/**
+ * @api {get} /users/:id Retrieve user
+ * @apiName RetrieveUser
+ * @apiGroup User
+ * @apiPermission user
+ * @apiParam {String} access_token User access_token.
+ * @apiSuccess {Object} user User's data.
+ * @apiError 404 User not found.
+ */
 router.get('/:id', token({required: true}), user.onGetUserById)
 
 router.delete('/:id', user.onDeleteUserById)

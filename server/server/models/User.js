@@ -80,6 +80,7 @@ userSchema.methods = {
     }
 
     fields.forEach((field) => { view[field] = this[field] })
+    console.log(view)
     return view
   },
 
