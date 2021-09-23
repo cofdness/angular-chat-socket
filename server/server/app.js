@@ -16,31 +16,51 @@ import chatRoomRouter from "./routes/chatRoom.js";
 import deleteRouter from "./routes/delete.js";
 // middlewares
 import { decode } from './middlewares/jwt.js'
+import authGraphql from "./middlewares/auth-graphql";
 // config
 import {env, ip, port} from './config'
 
-import {graphqlHTTP} from "express-graphql";
-
 //express-graphql
-const { graphql } = require('express-graphql')
-const { makeExecutableSchema } = require('@graphql-tools/schema')
-import typeDefs from "./graphql/typeDefs";
-import resolvers from './graphql/resolvers'
+import {graphqlHTTP} from "express-graphql";
+import {useServer} from "graphql-ws/lib/use/ws";
+import schema from './graphql'
 
 const { execute, subscribe } = require('graphql')
-const { SubscriptionServer } = require('subscriptions-transport-ws')
+const ws = require('ws')
 
 const app = express();
 
 //graphql
-const schema = makeExecutableSchema({
-  typeDefs: typeDefs,
-  resolvers: resolvers
-})
-app.use('/graphql', graphqlHTTP({
+app.use('/graphql', authGraphql , graphqlHTTP(req => ({
   schema: schema,
-  graphiql: { subscriptionEndpoint: `ws://${ip}:${port}/subscriptions`}
-}))
+  graphiql: true,
+  context: {
+    isAuth: req.isAuth,
+    user: req.user,
+    error: req.error
+  },
+  customFormatErrorFn: (err) => {
+    if (!err.originalError) {
+      return err
+    }
+    /*
+        You can add the following to any resolver
+        const error = new Error('My message')
+        error.data = [...]
+        error.code = 001
+    */
+    const message = err.message || 'An error occured.'
+    const code = err.originalError.code
+    const data = err.originalError.data
+    return {
+      // ...err,
+      message,
+      code,
+      data
+    }
+  }
+
+})))
 
 /** Get port from environment and store in Express. */
 app.set("port", port);
@@ -86,8 +106,24 @@ global.io.on('connection', WebSockets.connection)
 
 
 server.listen({ip: ip, port: port}, () => {
-  new SubscriptionServer({
-    execute, subscribe, schema,
+  // new SubscriptionServer({
+  //   execute, subscribe, schema,
+  // },
+  //   {
+  //     server,
+  //     path: '/subscriptions'
+  //   })
+  const path = '/subscriptions'
+  const wsServer = new ws.Server({
+    server,
+    path
+  });
+
+  useServer(
+    {
+      schema,
+      execute,
+      subscribe,
       onConnect: (ctx) => {
         console.log('Connect');
       },
@@ -103,11 +139,12 @@ server.listen({ip: ip, port: port}, () => {
       onComplete: (ctx, msg) => {
         console.log('Complete');
       },
-  },
-    {
-      server,
-      path: '/subscriptions'
-    })
+    },
+    wsServer
+  );
+  console.log(`Listening on server: http://${ip}:${port}`)
+  console.log(`GraphQL endpoint: http://${ip}:${port}/graphql`)
+  console.log(`GraphQL subscription: http://${ip}:${port}/subscriptions`)
 })
 
 // async function startServer(typeDefs, resolvers) {
