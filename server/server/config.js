@@ -41,7 +41,7 @@ const config = {
   test: { },
   development: {
     mongo: {
-      uri: 'mongodb://Phung:123456@127.0.0.1:27017/chat',
+      uri: 'mongodb+srv://phungAdmin:yswnZfH6dyaPSVh5@locallib.fttrc.mongodb.net/chat',
       options: {
         debug: true
       }

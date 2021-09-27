@@ -1,8 +1,9 @@
 import jwt from 'jsonwebtoken';
 // models
 import UserModel from '../models/User.js';
+import { jwtSecret } from '../config'
 
-const SECRET_KEY = 'some-secret-key';
+const SECRET_KEY = jwtSecret
 
 export const encode = async (req, res, next) => {
   try {

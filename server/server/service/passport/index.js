@@ -5,6 +5,7 @@ import { Strategy as BearerStrategy } from 'passport-http-bearer'
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt'
 import { jwtSecret, masterKey } from '../../config'
 import User, { schema } from '../../models/User'
+import {GraphQLLocalStrategy} from "graphql-passport";
 
 export const password = () => (req, res, next) =>
   passport.authenticate('password', { session: false }, (err, user, info) => {
@@ -29,6 +30,8 @@ export const token = ({ required, roles = User.roles } = {}) => (req, res, next)
       next()
     })
   })(req, res, next)
+
+export const graphql_auth = () => passport.authenticate('graphql')
 
 export const master = () => passport.authenticate('master', {session: false})
 
@@ -71,4 +74,23 @@ passport.use('token', new JwtStrategy({
     done(null, user)
     return null
   }).catch(done)
+}))
+
+passport.use('graphql', new GraphQLLocalStrategy(( email, pw, done ) => {
+    const userSchema = new Schema({ email: schema.tree.email, password: schema.tree.password})
+    userSchema.validate({ email, pw}, err => {
+      if (err) done(err)
+    })
+    User.findOne({ email }).then ((user) => {
+      if (!user) {
+        done(new Error('no matching user'))
+        return null
+      } else {
+        return user.authenticate(pw, user.password).then((user) => {
+          done(null, user)
+          return null
+        }).catch(done)
+      }
+
+    })
 }))

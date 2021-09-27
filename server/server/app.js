@@ -24,6 +24,8 @@ import {env, ip, port} from './config'
 import {graphqlHTTP} from "express-graphql";
 import {useServer} from "graphql-ws/lib/use/ws";
 import schema from './graphql'
+import {graphql_auth} from "./service/passport";
+import { buildContext } from "graphql-passport";
 
 const { execute, subscribe } = require('graphql')
 const ws = require('ws')
@@ -31,14 +33,10 @@ const ws = require('ws')
 const app = express();
 
 //graphql
-app.use('/graphql', authGraphql , graphqlHTTP(req => ({
+app.use('/graphql', authGraphql , graphqlHTTP({
   schema: schema,
   graphiql: true,
-  context: {
-    isAuth: req.isAuth,
-    user: req.user,
-    error: req.error
-  },
+  context: ({req, res}) => buildContext({req, res}),
   customFormatErrorFn: (err) => {
     if (!err.originalError) {
       return err
@@ -60,7 +58,7 @@ app.use('/graphql', authGraphql , graphqlHTTP(req => ({
     }
   }
 
-})))
+}))
 
 /** Get port from environment and store in Express. */
 app.set("port", port);

@@ -1,7 +1,8 @@
 import pubsub from "../../utils/pubsub";
-import userModel from "../../models/User";
-import {sign} from "../../service/jwt";
-import {success} from "../../service/response";
+import userSchema, {schema} from "../../models/User";
+import jwt from "jsonwebtoken";
+import {Schema} from "bodymen";
+import { jwtSecret } from '../../config'
 
 const event = {
   newUserEvent: 'new_user_event'
@@ -15,16 +16,38 @@ const userResolvers = {
   },
   Query: {
     user: (parent, args, context, info) => {
-      return userModel.find(args.id)
+      return userSchema.find(args.id)
     },
     users: (parent, args, context, info) => {
-      return userModel.find()
-    },
-    auth: async (parent, { input }, context, info) => {
-      console.log('auth call')
+      return userSchema.find()
     }
+
   },
   Mutation: {
+    login: async (parent, { input }, context, info) => {
+      const tempUser = new Schema({ email: schema.tree.email, password: schema.tree.password})
+      const {email, password} = input
+
+      tempUser.validate({ email, password}, err => {
+        if (err) return { err }
+      })
+      const user = await userSchema.findOne({email})
+      try {
+        let authUser = await user.authenticate(password)
+        if (authUser) {
+          const token = jwt.sign(authUser.id, jwtSecret)
+          return { token }
+        } else {
+          throw new Error('wrong password')
+        }
+
+      } catch (err) {
+        return { err }
+      }
+
+
+
+    },
     createUser: async (root, { input }, context, info) => {
       try {
         const user = await userModel.create(input)
