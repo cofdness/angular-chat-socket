@@ -10,10 +10,12 @@ import "./mongo";
 // socket configuration
 import WebSockets from "./utils/WebSockets.js";
 // routes
-import indexRouter from "./routes/index.js";
-import userRouter from "./routes/user.js";
-import chatRoomRouter from "./routes/chatRoom.js";
-import deleteRouter from "./routes/delete.js";
+// we switch to graphql, so we not use legacy route any more
+// import indexRouter from "./routes/index.js";
+// import userRouter from "./routes/user.js";
+// import chatRoomRouter from "./routes/chatRoom.js";
+// import deleteRouter from "./routes/delete.js";
+
 // middlewares
 import { decode } from './middlewares/jwt.js'
 import authGraphql from "./middlewares/auth-graphql";
@@ -24,8 +26,6 @@ import {env, ip, port} from './config'
 import {graphqlHTTP} from "express-graphql";
 import {useServer} from "graphql-ws/lib/use/ws";
 import schema from './graphql'
-import {graphql_auth} from "./service/passport";
-import { buildContext } from "graphql-passport";
 
 const { execute, subscribe } = require('graphql')
 const ws = require('ws')
@@ -33,10 +33,15 @@ const ws = require('ws')
 const app = express();
 
 //graphql
-app.use('/graphql', authGraphql , graphqlHTTP({
+app.use('/graphql', authGraphql , graphqlHTTP(req => ({
   schema: schema,
   graphiql: true,
-  context: ({req, res}) => buildContext({req, res}),
+  context: {
+    isAuthenticated: req.isAuthenticated,
+    user: req.user,
+    error: req.error,
+    masterKey: req.masterKey
+  },
   customFormatErrorFn: (err) => {
     if (!err.originalError) {
       return err
@@ -58,7 +63,7 @@ app.use('/graphql', authGraphql , graphqlHTTP({
     }
   }
 
-}))
+})))
 
 /** Get port from environment and store in Express. */
 app.set("port", port);
@@ -70,10 +75,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(queryErrorHandler())
 app.use(bodyErrorHandler())
 
-app.use("/", indexRouter);
-app.use("/users", userRouter);
-app.use("/room", decode, chatRoomRouter);
-app.use("/delete", deleteRouter);
+// app.use("/", indexRouter);
+// app.use("/users", userRouter);
+// app.use("/room", decode, chatRoomRouter);
+// app.use("/delete", deleteRouter);
 
 /** Create HTTP server. */
 // function createHttpServer(app){

@@ -1,24 +1,27 @@
 import pubsub from "../../utils/pubsub";
-import userSchema, {schema} from "../../models/User";
+import userSchema, {roles, schema} from "../../models/User";
 import jwt from "jsonwebtoken";
 import {Schema} from "bodymen";
 import { jwtSecret } from '../../config'
+import { authCheck, authType } from "../../middlewares/auth-check";
 
 const event = {
   newUserEvent: 'new_user_event'
 }
+const userType = {
+  admin: 'admin',
+  support: 'support',
+  customer: 'customer'
+}
 
 const userResolvers = {
-  roles: {
-    admin: 'admin',
-    support: 'support',
-    customer: 'customer'
-  },
   Query: {
     user: (parent, args, context, info) => {
+      authCheck([{type: authType.AUTH}], context)
       return userSchema.find(args.id)
     },
     users: (parent, args, context, info) => {
+      authCheck([{type: authType.AUTH}], context)
       return userSchema.find()
     }
 
@@ -45,25 +48,25 @@ const userResolvers = {
         return { err }
       }
 
-
-
     },
     createUser: async (root, { input }, context, info) => {
+      if (input.role === userType.admin ) {
+        // we need master key to create role admin
+        authCheck([{type: authType.MASTER_KEY}], context)
+      }
       try {
-        const user = await userModel.create(input)
-        const token = sign(user.id)
+        const user = await userSchema.create(input)
+        const token = jwt.sign(user.id, jwtSecret)
         await pubsub.publish(event.newUserEvent, {newUser: {token, user}})
-        return { token, user }
+        const {name, email, password, role} = user
+        return {name, email, password, role}
 
       } catch (err) {
-        throw Error('something wrong create user')
+        throw new Error('something wrong when create user')
       }
     },
     updateUser: async (root, { input }, context, info) => {
-      console.log(root)
-      console.log(input)
-      console.log(context)
-      console.log(info)
+
     },
     deleteUser: async (root, { input }, context, info) => {
       console.log(input)

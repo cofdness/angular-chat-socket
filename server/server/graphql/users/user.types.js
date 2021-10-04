@@ -1,12 +1,11 @@
 import gql from "graphql-tag";
 const userTypes = gql`
   type User {
-    id: ID
     name: String
     email: String
     password: String
     picture: String
-    role: roles
+    role: String
   }
   type Token {
     token: String
@@ -19,11 +18,7 @@ const userTypes = gql`
     name: String
     email: String!
     password: String!
-    role: roles
-  }
-
-  enum roles {
-    admin, support, customer
+    role: String
   }
 
   type Query {
