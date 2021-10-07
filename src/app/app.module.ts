@@ -13,6 +13,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { ThemeSwitchComponent } from './theme-switch/theme-switch.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { GraphQLModule} from "./graphql/graphql.module";
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
   entryComponents: [],
   imports: [
     BrowserModule,
+    GraphQLModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     MaterialModule,
@@ -32,7 +34,9 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

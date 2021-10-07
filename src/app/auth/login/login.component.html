@@ -1,0 +1,29 @@
+<div>
+  <div>
+    <form *ngIf="!authService.isLoggedIn" class="login-form" [formGroup]="loginFormGroup" (ngSubmit)="login()">
+      <mat-form-field class="login-full-width" appearance="fill">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com" required email>
+        <mat-error *ngIf="email?.hasError('email') && !email?.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="email?.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="login-full-width" appearance="fill">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password" required>
+        <mat-error *ngIf="password?.hasError('required')">
+          Password is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-error *ngIf="errorStatus"> Wrong username or password</mat-error>
+      <button mat-raised-button type="submit" color="primary" [disabled]="!loginFormGroup.valid">Login</button>
+    </form>
+    <div *ngIf="authService.isLoggedIn">
+      <button mat-raised-button (click)="logout()" color="accent">Logout</button>
+    </div>
+
+  </div>
+</div>

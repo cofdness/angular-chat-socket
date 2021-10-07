@@ -1,6 +1,6 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {SidebarService} from '../sidebar.service';
-import {Platform} from "@angular/cdk/platform";
+import {Platform} from '@angular/cdk/platform';
 
 @Component({
   selector: 'app-navbar',

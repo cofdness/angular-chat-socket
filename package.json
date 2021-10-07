@@ -22,6 +22,7 @@
     "@angular/platform-browser": "^12.2.9",
     "@angular/platform-browser-dynamic": "^12.2.9",
     "@angular/router": "^12.2.9",
+    "@apollo/client": "^3.4.16",
     "@capacitor/android": "^3.2.4",
     "@capacitor/app": "^1.0.3",
     "@capacitor/browser": "^1.0.3",
@@ -31,7 +32,7 @@
     "@capacitor/keyboard": "^1.1.0",
     "@capacitor/status-bar": "^1.0.3",
     "@ionic/angular": "^5.8.2",
-    "rxjs": "^7.4.0",
+    "rxjs": "^7.0.0",
     "socket.io-client": "^4.2.0",
     "tslib": "^2.3.1",
     "zone.js": "^0.11.4"

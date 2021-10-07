@@ -6,7 +6,7 @@
 
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav [mode]="sidebarService.mobileQuery.matches ? 'over' : 'side'"
-                 [fixedInViewport]="sidebarService.mobileQuery.matches" fixedTopGap="64"
+                 [fixedInViewport]="sidebarService.mobileQuery.matches" fixedTopGap="56"
                  [opened]="sidebarService.sidebarOpen"
                  (closedStart)="sidebarService.toggleSidebar(false)" class="mat-sidenav-padding">
       <mat-nav-list>
@@ -17,7 +17,7 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <p *ngFor="let content of fillerContent">{{content}}</p>
+      <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
