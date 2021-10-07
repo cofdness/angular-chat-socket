@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 const userTypes = gql`
   type User {
+    id: ID
     name: String
     email: String
     password: String
@@ -15,6 +16,7 @@ const userTypes = gql`
     password: String!
   }
   input UserMutation {
+    id: String
     name: String
     email: String!
     password: String!
@@ -28,7 +30,7 @@ const userTypes = gql`
   type Mutation {
     login(input: UserLogin!): Token
     createUser(input: UserMutation): User
-    updateUser(input: UserMutation): User
+    updateUserPassword(input: UserLogin): String
     deleteUser(input: UserMutation): User
   }
   `

@@ -32,7 +32,7 @@ const userResolvers = {
       const {email, password} = input
 
       tempUser.validate({ email, password}, err => {
-        if (err) return { err }
+        if (err) throw err
       })
       const user = await userSchema.findOne({email})
       try {
@@ -45,7 +45,7 @@ const userResolvers = {
         }
 
       } catch (err) {
-        return { err }
+        throw err
       }
 
     },
@@ -58,15 +58,27 @@ const userResolvers = {
         const user = await userSchema.create(input)
         const token = jwt.sign(user.id, jwtSecret)
         await pubsub.publish(event.newUserEvent, {newUser: {token, user}})
-        const {name, email, password, role} = user
-        return {name, email, password, role}
+        // const {name, email, password, role} = user
+        // return {name, email, password, role}
+        return user.view(true)
 
       } catch (err) {
         throw new Error('something wrong when create user')
       }
     },
-    updateUser: async (root, { input }, context, info) => {
+    updateUserPassword: async (root, { input }, context, info) => {
+      authCheck([{type: authType.AUTH}], context)
+      try {
+        const updateUser = await userSchema.findOne({email: input.email})
+        if (updateUser.id !== context.user.id) {
+          throw new Error('You can\'t change other user\'s data')
+        }
+        const finishUpdateUser = await Object.assign(updateUser, input).save()
+        return  finishUpdateUser.view(true)
 
+      } catch (err) {
+        throw new Error('Wrong input provided')
+      }
     },
     deleteUser: async (root, { input }, context, info) => {
       console.log(input)
