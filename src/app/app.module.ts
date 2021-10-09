@@ -14,13 +14,15 @@ import { ThemeSwitchComponent } from './theme-switch/theme-switch.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { GraphQLModule} from "./graphql/graphql.module";
+import {LoginComponent} from "./auth/login/login.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     ThemeSwitchComponent,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    LoginComponent
   ],
   entryComponents: [],
   imports: [

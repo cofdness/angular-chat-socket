@@ -1,21 +1,23 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {Apollo} from "apollo-angular";
-import {HttpLink} from "apollo-angular/http";
-import {InMemoryCache} from "@apollo/client";
-import {HttpClientModule} from "@angular/common/http";
+import {NgModule} from '@angular/core';
+import {APOLLO_OPTIONS} from 'apollo-angular';
+import {ApolloClientOptions, InMemoryCache} from '@apollo/client/core';
+import {HttpLink} from 'apollo-angular/http';
 
-const uri = 'http://192.168.31.74/graphql'
+const uri = 'http://192.168.31.75:3000/graphql'; // <-- add the URL of the GraphQL server here
+export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
+  return {
+    link: httpLink.create({uri}),
+    cache: new InMemoryCache(),
+  };
+}
 
 @NgModule({
-  exports: [HttpClientModule]
+  providers: [
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory: createApollo,
+      deps: [HttpLink],
+    },
+  ],
 })
-export class GraphQLModule {
-  constructor(apollo: Apollo, httpLink: HttpLink) {
-    // create Apollo
-    apollo.create({
-      link: httpLink.create({uri}),
-      cache: new InMemoryCache()
-    });
-  }
-}
+export class GraphQLModule {}

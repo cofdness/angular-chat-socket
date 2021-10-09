@@ -32,6 +32,18 @@ const ws = require('ws')
 
 const app = express();
 
+
+
+/** Get port from environment and store in Express. */
+app.set("port", port);
+
+app.use(cors())
+app.use(morgan('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(queryErrorHandler())
+app.use(bodyErrorHandler())
+
 //graphql
 app.use('/graphql', authGraphql , graphqlHTTP(req => ({
   schema: schema,
@@ -64,16 +76,6 @@ app.use('/graphql', authGraphql , graphqlHTTP(req => ({
   }
 
 })))
-
-/** Get port from environment and store in Express. */
-app.set("port", port);
-
-app.use(cors())
-app.use(morgan('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(queryErrorHandler())
-app.use(bodyErrorHandler())
 
 // app.use("/", indexRouter);
 // app.use("/users", userRouter);
