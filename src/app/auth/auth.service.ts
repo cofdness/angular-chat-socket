@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import {hostApi} from '../config.service';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import {User} from './user';
-import { Apollo, gql } from "apollo-angular";
+import { Apollo, gql } from 'apollo-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class AuthService {
   constructor(private apollo: Apollo) {
   }
 
-  login(email: string, password: string): void{
+  login(email: string, password: string): Observable<boolean>{
 
     // const httpOptions = {
     //   headers: new HttpHeaders({
@@ -48,17 +48,27 @@ export class AuthService {
           email: $email,
           password: $password
         }){
-          token
+          email
+          name
+          picture
+          accessToken {
+            token
+          }
         }
       }
     `;
-    this.apollo.mutate({
+    return this.apollo.mutate({
       mutation: login,
       variables: {
         email,
         password
       }
-    }).subscribe(({data}) => console.log(data));
+    }).pipe(map(({data}) => {
+      // @ts-ignore
+        this.user = data.login as User;
+        localStorage.setItem('token', this.user.accessToken.token);
+        return this.isLoggedIn = true;
+    } ));
   }
 
   logout(): void {

@@ -34,26 +34,25 @@ export class LoginComponent implements OnInit {
   login(): void {
     this.message = 'Try to log in ...';
 
-    // this.authService.login(this.email?.value, this.password?.value).subscribe(() => {
-    //   this.message = this.getMessage();
-    //   if (this.authService.isLoggedIn) {
-    //     const navigationExtras: NavigationExtras = {
-    //       queryParamsHandling: 'preserve',
-    //       preserveFragment: true
-    //     };
-    //     const redirectUrl = this.authService.redirectUrl;
-    //     if (redirectUrl) {
-    //       this.router.navigate([redirectUrl], navigationExtras).then();
-    //     }
-    //     // fix the error redirect if redirectUrl = null
-    //     else {
-    //       this.router.navigate(['/admin'], navigationExtras).then();
-    //     }
-    //   }
-    // }, error => {
-    //   this.errorStatus = this.authService.handleError(error).status;
-    // });
-    this.authService.login(this.email?.value, this.password?.value);
+    this.authService.login(this.email?.value, this.password?.value).subscribe(() => {
+      this.message = this.getMessage();
+      if (this.authService.isLoggedIn) {
+        const navigationExtras: NavigationExtras = {
+          queryParamsHandling: 'preserve',
+          preserveFragment: true
+        };
+        const redirectUrl = this.authService.redirectUrl;
+        if (redirectUrl) {
+          this.router.navigate([redirectUrl], navigationExtras).then();
+        }
+        // fix the error redirect if redirectUrl = null
+        else {
+          this.router.navigate(['/user'], navigationExtras).then();
+        }
+      }
+    }, error => {
+      this.errorStatus = this.authService.handleError(error).status;
+    });
   }
 
   logout(): void {

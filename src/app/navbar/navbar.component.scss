@@ -1,3 +1,6 @@
+:root {
+  --avatar-size: 18rem;
+}
 :host {
   position: fixed;
   left: 0;
@@ -6,4 +9,10 @@
 }
 .spacer {
   flex: 1 1 auto;
+}
+.circle {
+  border-radius: 50%;
+  height: var(--avatar-size);
+  text-align: center;
+  width: var(--avatar-size);
 }

@@ -7,6 +7,7 @@ const userTypes = gql`
     password: String
     picture: String
     role: String
+    accessToken: Token
   }
   type Token {
     token: String
@@ -28,7 +29,7 @@ const userTypes = gql`
     user(id: ID!): User
   }
   type Mutation {
-    login(input: UserLogin!): Token
+    login(input: UserLogin!): User
     createUser(input: UserMutation): User
     updateUserPassword(input: UserLogin): String
     deleteUser(input: UserMutation): User

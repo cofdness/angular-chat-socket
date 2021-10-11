@@ -39,7 +39,9 @@ const userResolvers = {
         let authUser = await user.authenticate(password)
         if (authUser) {
           const token = jwt.sign(authUser.id, jwtSecret)
-          return { token }
+          const view = user.view(true)
+          view.accessToken = {token: token}
+          return view
         } else {
           throw new Error('wrong password')
         }

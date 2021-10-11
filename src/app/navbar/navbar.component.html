@@ -4,6 +4,8 @@
   </button>
   <span>Shop App</span>
   <span class="spacer"></span>
-  <a mat-button routerLink="/login">Login</a>
+  <a *ngIf="!authService.isLoggedIn" mat-button routerLink="/register">Register</a>
+  <a *ngIf="!authService.isLoggedIn" mat-button routerLink="/login">Login</a>
+  <a *ngIf="authService.isLoggedIn" mat-button routerLink="/user">User</a>
   <app-theme-switch></app-theme-switch>
 </mat-toolbar>

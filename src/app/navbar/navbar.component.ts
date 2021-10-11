@@ -1,6 +1,7 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
 import {SidebarService} from '../sidebar.service';
 import {Platform} from '@angular/cdk/platform';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,6 +13,7 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     public sidebarService: SidebarService,
+    public authService: AuthService,
     public platform: Platform
   ) {
   }
