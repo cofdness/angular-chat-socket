@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import {Schema} from "bodymen";
 import { jwtSecret } from '../../config'
 import { authCheck, authType } from "../../middlewares/auth-check";
+import {throwError} from "rxjs";
 
 const event = {
   newUserEvent: 'new_user_event'
@@ -16,9 +17,19 @@ const userType = {
 
 const userResolvers = {
   Query: {
-    user: (parent, args, context, info) => {
+    user: async (parent, args, context, info) => {
       authCheck([{type: authType.AUTH}], context)
-      return userSchema.find(args.id)
+      if (args.id) {
+        try{
+          const user = await userSchema.findById(args.id)
+          return user.view(true)
+        } catch (err) {
+          throw err
+        }
+      } else {
+        return context.user.view(true)
+      }
+
     },
     users: (parent, args, context, info) => {
       authCheck([{type: authType.AUTH}], context)

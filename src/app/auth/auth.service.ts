@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import { map } from 'rxjs/operators';
 import {hostApi} from '../config.service';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
-import {User} from './user';
+import {User} from '../user/user';
 import { Apollo, gql } from 'apollo-angular';
 
 @Injectable({

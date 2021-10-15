@@ -26,7 +26,7 @@ const userTypes = gql`
 
   type Query {
     users: [User]
-    user(id: ID!): User
+    user(id: ID): User
   }
   type Mutation {
     login(input: UserLogin!): User
