@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
-  CanActivateChild,
+  CanActivateChild, Route,
   Router,
   RouterStateSnapshot,
   UrlTree
@@ -28,6 +28,11 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.canActivate(childRoute, state);
+  }
+
+  canLoad(route: Route): boolean | UrlTree {
+    const url = `/${route.path}`;
+    return this.checkLogin(url);
   }
 
   checkLogin(url): boolean | UrlTree {

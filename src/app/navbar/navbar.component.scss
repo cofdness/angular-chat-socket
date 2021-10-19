@@ -1,6 +1,6 @@
-:root {
-  --avatar-size: 18rem;
-}
+//:root {
+//  --avatar-size: 16px;
+//}
 :host {
   position: fixed;
   left: 0;
@@ -12,7 +12,8 @@
 }
 .circle {
   border-radius: 50%;
-  height: var(--avatar-size);
+  height: 32px;
   text-align: center;
-  width: var(--avatar-size);
+  width: 32px;
+  margin-right: 4px;
 }

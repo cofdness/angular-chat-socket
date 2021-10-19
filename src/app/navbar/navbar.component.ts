@@ -29,4 +29,8 @@ export class NavbarComponent implements OnInit {
   sidebarToggle() {
     this.sidebarService.toggleSidebar(true);
   }
+
+  logout(){
+    this.authService.logout();
+  }
 }

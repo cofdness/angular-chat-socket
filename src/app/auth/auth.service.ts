@@ -5,6 +5,7 @@ import {hostApi} from '../config.service';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import {User} from '../user/user';
 import { Apollo, gql } from 'apollo-angular';
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,10 @@ export class AuthService {
   httpError: HttpErrorResponse | undefined;
   masterToken = '';
 
-  constructor(private apollo: Apollo) {
+  constructor(
+    private apollo: Apollo,
+    private router: Router
+  ) {
   }
 
   login(email: string, password: string): Observable<boolean>{
@@ -72,9 +76,10 @@ export class AuthService {
   }
 
   logout(): void {
-    // this.user = {username: ''};
-    // this.isLoggedIn = false;
-    // this.loginMessage = `Login`;
+    localStorage.removeItem('token');
+    this.isLoggedIn = false;
+    this.user = {email: '', name: '', picture: ''};
+    this.router.navigate(['login']).then();
   }
 
   handleError(error: HttpErrorResponse): HttpErrorResponse {

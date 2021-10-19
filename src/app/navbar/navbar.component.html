@@ -6,6 +6,10 @@
   <span class="spacer"></span>
   <a *ngIf="!authService.isLoggedIn" mat-button routerLink="/register">Register</a>
   <a *ngIf="!authService.isLoggedIn" mat-button routerLink="/login">Login</a>
-  <a *ngIf="authService.isLoggedIn" mat-button routerLink="/user">User</a>
+  <a *ngIf="authService.isLoggedIn" mat-button [matMenuTriggerFor]="userMenu"><img class="circle" [src]="authService.user.picture"><span>{{authService.user.name}}</span></a>
   <app-theme-switch></app-theme-switch>
 </mat-toolbar>
+  <mat-menu #userMenu="matMenu">
+    <a mat-menu-item routerLink="user/user-info">User Info</a>
+    <button mat-menu-item (click)="logout()">Logout</button>
+  </mat-menu>

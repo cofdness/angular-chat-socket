@@ -25,7 +25,7 @@
 }
 
 .deeppurple-amber {
-@include all-theme-and-custom-component($deeppurple-amber);
+  @include all-theme-and-custom-component($deeppurple-amber);
 }
 
 .indigo-pink {
