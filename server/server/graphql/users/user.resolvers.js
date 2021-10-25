@@ -68,12 +68,15 @@ const userResolvers = {
         authCheck([{type: authType.MASTER_KEY}], context)
       }
       try {
+        console.log(input)
         const user = await userSchema.create(input)
         const token = jwt.sign(user.id, jwtSecret)
         await pubsub.publish(event.newUserEvent, {newUser: {token, user}})
         // const {name, email, password, role} = user
         // return {name, email, password, role}
-        return user.view(true)
+        const view = user.view(true)
+        view.accessToken = {token: token}
+        return view
 
       } catch (err) {
         throw new Error('something wrong when create user')

@@ -13,8 +13,9 @@ import {HttpClientModule} from '@angular/common/http';
 import { ThemeSwitchComponent } from './theme-switch/theme-switch.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { GraphQLModule} from "./graphql/graphql.module";
-import {LoginComponent} from "./auth/login/login.component";
+import { GraphQLModule} from './graphql/graphql.module';
+import {LoginComponent} from './auth/login/login.component';
+import {RegisterComponent} from './auth/register/register.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {LoginComponent} from "./auth/login/login.component";
     ThemeSwitchComponent,
     NavbarComponent,
     SidebarComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   entryComponents: [],
   imports: [

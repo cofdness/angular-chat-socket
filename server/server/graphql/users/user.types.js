@@ -16,13 +16,17 @@ const userTypes = gql`
     email: String!
     password: String!
   }
-  input UserMutation {
-    id: String
+  input UserCreate {
     name: String
     email: String!
     password: String!
     role: String
   }
+  input UserDelete {
+    id: ID!
+    email: String!
+  }
+
 
   type Query {
     users: [User]
@@ -30,9 +34,9 @@ const userTypes = gql`
   }
   type Mutation {
     login(input: UserLogin!): User
-    createUser(input: UserMutation): User
+    createUser(input: UserCreate): User
     updateUserPassword(input: UserLogin): String
-    deleteUser(input: UserMutation): User
+    deleteUser(input: UserDelete): User
   }
   `
 export default userTypes
