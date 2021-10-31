@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {AuthService} from '../auth/auth.service';
-import {Apollo, gql} from 'apollo-angular';
-import {Observable} from 'rxjs';
-import {User, UserInput} from './user';
+import { AuthService } from '../auth/auth.service';
+import { Apollo, gql } from 'apollo-angular';
+import { Observable } from 'rxjs';
+import { User } from './user';
 import {map} from 'rxjs/operators';
 
 @Injectable({

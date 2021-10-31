@@ -1,10 +1,7 @@
 import pubsub from "../../utils/pubsub";
 import userSchema, {roles, schema} from "../../models/User";
-// import jwt from "jsonwebtoken";
 import {Schema} from "bodymen";
-// import { jwtSecret } from '../../config'
 import { authCheck, authType } from "../../middlewares/auth-check";
-import {throwError} from "rxjs";
 
 const event = {
   newUserEvent: 'new_user_event'
@@ -72,8 +69,6 @@ const userResolvers = {
         const user = await userSchema.create(input)
         const token = jwt.sign(user.id, jwtSecret)
         await pubsub.publish(event.newUserEvent, {newUser: {token, user}})
-        // const {name, email, password, role} = user
-        // return {name, email, password, role}
         const view = user.view(true)
         view.accessToken = {token: token}
         return view

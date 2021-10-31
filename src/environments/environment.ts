@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'localhost:3000'
+  serverAddress: '192.168.31.214:3000',
+  apiProtocol: 'https',
+  clientProtocol: 'https'
 };
 
 /*

@@ -1,9 +1,13 @@
 import http from "http";
+import https from "https"
+import * as fs from "fs";
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import {errorHandler as queryErrorHandler} from 'querymen'
 import {errorHandler as bodyErrorHandler} from 'bodymen'
+import {server_uri} from "./helper/host";
+
 import { Server } from 'socket.io'
 
 // mongo connection
@@ -22,7 +26,7 @@ import WebSockets from "./utils/WebSockets.js";
 import authGraphql from "./middlewares/auth-graphql";
 
 // config
-import {env, ip, port} from './config'
+import { ip, port, protocol } from './config'
 
 //express-graphql
 import {graphqlHTTP} from "express-graphql";
@@ -94,34 +98,36 @@ app.use('/graphql', authGraphql , graphqlHTTP(req => ({
 // app.use("/delete", deleteRouter);
 
 /** Create HTTP server. */
-// function createHttpServer(app){
-//   if (env === 'production') {
-//     const sslkey = fs.readFileSync('./www/keys/ssl-key.pem')
-//     const sslcert = fs.readFileSync('./www/keys/ssl-cert.pem')
-//     const option = {
-//       key: sslkey,
-//       cert: sslcert
-//     }
-//     return {server: https.createServer(option, app), urlPrefix: 'https://'}
-//   } else {
-//     return {server: http.createServer(app), urlPrefix: 'http://'}
-//   }
-//
-// }
+function createHttpServer(app){
+  if (protocol === 'https') {
+    const sslkey = fs.readFileSync('./www/keys/ssl-key.pem')
+    const sslcert = fs.readFileSync('./www/keys/ssl-cert.pem')
+    const option = {
+      key: sslkey,
+      cert: sslcert
+    }
+    return https.createServer(option, app)
+  } else {
+    return http.createServer(app)
+  }
 
-const server = http.createServer(app)
+}
+
+const server = createHttpServer(app)
+// const server = http.createServer(app)
 
 /** Create socket connection */
-global.io = new Server(server, {
-  cors: {
-    origin: '*',
-    method: ['GET', 'POST']
-  }
-})
-global.io.on('connection', WebSockets.connection)
+// we switch to graphql subscriptions
+// global.io = new Server(server, {
+//   cors: {
+//     origin: '*',
+//     method: ['GET', 'POST']
+//   }
+// })
+// global.io.on('connection', WebSockets.connection)
 
 
-server.listen({ip: ip, port: port}, () => {
+server.listen({ ip, port }, () => {
   const path = '/subscriptions'
   const wsServer = new ws.Server({
     server,
@@ -151,7 +157,7 @@ server.listen({ip: ip, port: port}, () => {
     },
     wsServer
   );
-  console.log(`Listening on server: http://${ip}:${port}`)
-  console.log(`GraphQL endpoint: http://${ip}:${port}/graphql`)
-  console.log(`GraphQL subscription: http://${ip}:${port}/subscriptions`)
+  console.log(`Listening on server: ${server_uri}`)
+  console.log(`GraphQL endpoint: ${server_uri}/graphql`)
+  console.log(`GraphQL subscription: ${server_uri}/subscriptions`)
 })

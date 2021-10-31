@@ -24,7 +24,11 @@ const config = {
     env: process.env.NODE_ENV || 'development',
     root: path.join(__dirname, '..'),
     port: process.env.PORT || 3000,
-    ip: process.env.IP || '0.0.0.0',
+    ip: process.env.IP || 'localhost',
+    protocol: process.env.PROTOCOL || 'http',
+    client_ip: process.env.CLIENT_IP || 'localhost',
+    client_port: process.env.CLIENT_PORT || '4200',
+    client_protocol: process.env.CLIENT_PROTOCOL || 'http',
     apiRoot: process.env.API_ROOT || '',
     defaultEmail: 'vtkp2002dn@gmail.com',
     sendgridKey: requireProcessEnv('SENDGRID_KEY'),
@@ -43,7 +47,7 @@ const config = {
   test: { },
   development: {
     mongo: {
-      uri: 'mongodb+srv://phungAdmin:yswnZfH6dyaPSVh5@locallib.fttrc.mongodb.net/chat',
+      uri: process.env.MONGODB_URI,
       options: {
         debug: true
       }
@@ -53,7 +57,7 @@ const config = {
     ip: process.env.IP || undefined,
     port: process.env.PORT || 8080,
     mongo: {
-      uri: process.env.MONGODB_URI || 'mongodb+srv://phungAdmin:yswnZfH6dyaPSVh5@locallib.fttrc.mongodb.net/chat'
+      uri: process.env.MONGODB_URI
     }
   }
 }

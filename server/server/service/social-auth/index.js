@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {FACEBOOK_APP_ID, FACEBOOK_APP_SECRET} from '../../config'
+import {server_uri} from "../../helper/host";
 
 export const getFacebookAccessToken = async (code) => {
   const { data } = await axios({
@@ -8,7 +9,7 @@ export const getFacebookAccessToken = async (code) => {
     params: {
       client_id: FACEBOOK_APP_ID,
       client_secret: FACEBOOK_APP_SECRET,
-      redirect_uri: 'http://localhost:3000/auth/facebook/callback',
+      redirect_uri: `${server_uri}/auth/facebook/callback`,
       code
     }
   })

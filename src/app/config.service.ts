@@ -1,6 +1,6 @@
 // host url
 import {environment} from '../environments/environment';
-export const hostApi = environment.apiUrl || 'http://192.168.31.202:9000';
+export const serverUri = `${environment.apiProtocol}://${environment.serverAddress}`;
 
 import {WINDOW} from './window.providers';
 import {Inject, Injectable} from '@angular/core';
@@ -11,7 +11,7 @@ import {Inject, Injectable} from '@angular/core';
 export class ConfigService {
   hostUrl!: string;
   constructor(@Inject(WINDOW) private window: Window) {
-    this.hostUrl = `http://${this.getHostname()}`;
+    this.hostUrl = `${environment.clientProtocol}://${this.getHostname()}`;
   }
 
   getHostname(): string {

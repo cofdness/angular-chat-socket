@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../auth.service';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
-import {UserService} from "../../user/user.service";
+import {UserService} from '../../user/user.service';
+import { serverUri } from '../../config.service';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,7 @@ import {UserService} from "../../user/user.service";
 })
 export class LoginComponent implements OnInit {
 
+  serverUriFacebook = `${serverUri}/auth/facebook`;
   loginFormGroup!: FormGroup;
   message: string | undefined;
   errorStatus: number | undefined;

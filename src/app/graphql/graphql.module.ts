@@ -3,8 +3,9 @@ import {APOLLO_OPTIONS} from 'apollo-angular';
 import {ApolloClientOptions, InMemoryCache, ApolloLink} from '@apollo/client/core';
 import {HttpLink} from 'apollo-angular/http';
 import {HttpHeaders} from '@angular/common/http';
+import { serverUri } from '../config.service';
 
-const uri = 'http://192.168.31.75:3000/graphql'; // <-- add the URL of the GraphQL server here
+const uri = `${serverUri}/graphql`;
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   const http = httpLink.create({uri});
   const middleware = new ApolloLink((operation, forward) => {
