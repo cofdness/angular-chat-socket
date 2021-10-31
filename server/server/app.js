@@ -5,8 +5,10 @@ import cors from "cors";
 import {errorHandler as queryErrorHandler} from 'querymen'
 import {errorHandler as bodyErrorHandler} from 'bodymen'
 import { Server } from 'socket.io'
+
 // mongo connection
 import "./mongo";
+
 // socket configuration
 import WebSockets from "./utils/WebSockets.js";
 // routes
@@ -17,8 +19,8 @@ import WebSockets from "./utils/WebSockets.js";
 // import deleteRouter from "./routes/delete.js";
 
 // middlewares
-import { decode } from './middlewares/jwt.js'
 import authGraphql from "./middlewares/auth-graphql";
+
 // config
 import {env, ip, port} from './config'
 
@@ -26,6 +28,10 @@ import {env, ip, port} from './config'
 import {graphqlHTTP} from "express-graphql";
 import {useServer} from "graphql-ws/lib/use/ws";
 import schema from './graphql'
+
+//facebook
+import {facebook} from "./service/passport";
+import {facebook_redirect} from "./service/passport";
 
 const { execute, subscribe } = require('graphql')
 const ws = require('ws')
@@ -43,6 +49,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(queryErrorHandler())
 app.use(bodyErrorHandler())
+
+
+//facebook auth
+app.get('/auth/facebook', facebook())
+app.get('/auth/facebook/callback', facebook_redirect())
 
 //graphql
 app.use('/graphql', authGraphql , graphqlHTTP(req => ({
@@ -111,13 +122,6 @@ global.io.on('connection', WebSockets.connection)
 
 
 server.listen({ip: ip, port: port}, () => {
-  // new SubscriptionServer({
-  //   execute, subscribe, schema,
-  // },
-  //   {
-  //     server,
-  //     path: '/subscriptions'
-  //   })
   const path = '/subscriptions'
   const wsServer = new ws.Server({
     server,
@@ -151,20 +155,3 @@ server.listen({ip: ip, port: port}, () => {
   console.log(`GraphQL endpoint: http://${ip}:${port}/graphql`)
   console.log(`GraphQL subscription: http://${ip}:${port}/subscriptions`)
 })
-
-// async function startServer(typeDefs, resolvers) {
-//   const apolloServer = new ApolloServer({
-//     typeDefs,
-//     resolvers,
-//     plugins: [ApolloServerPluginDrainHttpServer({ httpServer: server })],
-//   });
-//   /** Listen on provided port, on all network interfaces. */
-//   await apolloServer.start();
-//   apolloServer.applyMiddleware({ app });
-//   await new Promise(resolve => server.listen({ip: ip, port: port }, resolve));
-//   /** Event listener for HTTP server "listening" event. */
-//   console.log(`Listening on server: ${urlPrefix}${ip}:${port}/ and path graphql is ${apolloServer.graphqlPath}`)
-// }
-//
-//
-// startServer(typeDefs, resolvers).catch(err => console.log(err))

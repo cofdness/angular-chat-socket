@@ -6,6 +6,9 @@ import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt'
 import { jwtSecret, masterKey } from '../../config'
 import User, { schema } from '../../models/User'
 import {GraphQLLocalStrategy} from "graphql-passport";
+import FacebookStrategy from 'passport-facebook'
+import {FACEBOOK_APP_ID, FACEBOOK_APP_SECRET} from '../../config'
+import {getFacebookAccessToken, getFacebookUserData} from "../social-auth";
 
 export const password = () => (req, res, next) =>
   passport.authenticate('password', { session: false }, (err, user, info) => {
@@ -34,6 +37,23 @@ export const token = ({ required, roles = User.roles } = {}) => (req, res, next)
 export const graphql_auth = () => passport.authenticate('graphql')
 
 export const master = () => passport.authenticate('master', {session: false})
+
+export const facebook = () => passport.authenticate('facebook', {session: false, scope:['email']})
+export const facebook_redirect = () => async ({query}, res, next) => {
+  if (query.code) {
+    const { access_token } = await getFacebookAccessToken(query.code)
+    const FbUser = await getFacebookUserData(access_token)
+    FbUser.service = 'facebook'
+    FbUser.picture = FbUser.picture.data.url
+    const user = await User.createFromService(FbUser)
+    const accessToken = await user.getJWTToken()
+    res.redirect(`http://localhost:4200/login/?access_token=${accessToken}`)
+  } else {
+    next(new Error('something wrong when get facebook token'))
+  }
+
+}
+
 
 passport.use('password', new BasicStrategy((email, password, done) => {
   const userSchema = new Schema({ email: schema.tree.email, password: schema.tree.password })
@@ -94,3 +114,10 @@ passport.use('graphql', new GraphQLLocalStrategy(( email, pw, done ) => {
 
     })
 }))
+
+passport.use(new FacebookStrategy({
+  clientID: FACEBOOK_APP_ID,
+  clientSecret: FACEBOOK_APP_SECRET,
+  callbackURL: 'http://localhost:3000/auth/facebook/callback',
+  profileFields: ['id', 'email', 'name', 'picture']
+}, ()=>{}))

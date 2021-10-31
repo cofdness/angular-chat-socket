@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 import crypto from "crypto";
 import bcrypt from "bcrypt"
-import {env} from '../config'
+import { env } from '../config'
+import randToken from 'rand-token'
+import jwt from 'jsonwebtoken'
+import { jwtSecret } from '../config'
 
 export const roles = ['admin', 'support', 'consumer']
 
@@ -33,6 +36,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: roles,
       default: 'support'
+    },
+    services: {
+      facebook: String,
+      github: String,
+      google: String
     },
     friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
   },
@@ -67,7 +75,20 @@ userSchema.pre('save', async function (next) {
 })
 
 userSchema.statics = {
-  roles
+  roles,
+  createFromService({service, id, email, name, picture}) {
+    return this.findOne({$or: [{[`services.${service}`]: id }, { email }]}).then((user) => {
+      if (user) {
+        user.services[service] = id
+        user.name = name
+        user.picture = picture
+        return user.save()
+      } else {
+        const password = randToken.generate(16)
+        return this.create({services: {[service]: id}, email, password, name, picture})
+      }
+    })
+  }
 }
 
 userSchema.methods = {
@@ -85,6 +106,10 @@ userSchema.methods = {
 
   authenticate(password) {
     return bcrypt.compare(password, this.password).then(valid => valid ? this : false)
+  },
+
+  getJWTToken() {
+    return jwt.sign(this['id'], jwtSecret)
   }
 }
 

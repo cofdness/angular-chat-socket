@@ -1,8 +1,8 @@
 import pubsub from "../../utils/pubsub";
 import userSchema, {roles, schema} from "../../models/User";
-import jwt from "jsonwebtoken";
+// import jwt from "jsonwebtoken";
 import {Schema} from "bodymen";
-import { jwtSecret } from '../../config'
+// import { jwtSecret } from '../../config'
 import { authCheck, authType } from "../../middlewares/auth-check";
 import {throwError} from "rxjs";
 
@@ -49,7 +49,7 @@ const userResolvers = {
       try {
         let authUser = await user.authenticate(password)
         if (authUser) {
-          const token = jwt.sign(authUser.id, jwtSecret)
+          const token = await user.getJWTToken()
           const view = user.view(true)
           view.accessToken = {token: token}
           return view

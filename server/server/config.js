@@ -30,6 +30,8 @@ const config = {
     sendgridKey: requireProcessEnv('SENDGRID_KEY'),
     masterKey: requireProcessEnv('MASTER_KEY'),
     jwtSecret: requireProcessEnv('JWT_SECRET'),
+    FACEBOOK_APP_ID: requireProcessEnv('FACEBOOK_APP_ID'),
+    FACEBOOK_APP_SECRET: requireProcessEnv('FACEBOOK_APP_SECRET'),
     mongo: {
       options: {
         useUnifiedTopology: true,

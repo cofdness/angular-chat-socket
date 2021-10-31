@@ -53,4 +53,19 @@ div.mat-list-item-content {
   padding-left: 24px !important;
 }
 
+.form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  flex-flow: column;
+}
+.form-common {
+  display: flex;
+  flex-flow: column wrap;
+  flex-wrap: wrap;
+  width: 320px;
+}
+
 @import "material-fallback";

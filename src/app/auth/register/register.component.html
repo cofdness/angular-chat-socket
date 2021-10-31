@@ -1,5 +1,6 @@
-<div class="container">
-  <form [formGroup]="registerForm" (ngSubmit)="register()" class="register-form">
+<div class="form-container">
+  <mat-card class="mat-elevation-z7">
+  <form [formGroup]="registerForm" (ngSubmit)="register()" class="form-common">
     <mat-form-field class="full-width" appearance="standard">
       <mat-label>Email</mat-label>
       <input color="accent" type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
@@ -26,4 +27,5 @@
     </mat-form-field>
     <button mat-raised-button type="submit" color="primary" [disabled]="!registerForm.valid || registerForm.hasError('mismatch')">Register</button>
   </form>
+  </mat-card>
 </div>
