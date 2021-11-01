@@ -4,6 +4,7 @@ import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/form
 import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 import {UserService} from '../../user/user.service';
 import { serverUri } from '../../config.service';
+import { Platform} from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
     public authService: AuthService,
     public router: Router,
     private route: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    private platform: Platform
   ) { }
 
   ngOnInit(): void {
@@ -34,6 +36,11 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', params.access_token);
         this.userService.getUser().subscribe((user) => {
           if (this.authService.isLoggedIn) {
+            if (this.platform.is('mobileweb')){
+              if (this.platform.is('ios')) {
+
+              }
+            }
             this.redirectAfterLoginSuccess();
           }
         });
@@ -66,7 +73,7 @@ export class LoginComponent implements OnInit {
     }
     // fix the error redirect if redirectUrl = null
     else {
-      this.router.navigate(['/user'], navigationExtras).then();
+      this.router.navigate(['/user/user-info'], navigationExtras).then();
     }
   }
 

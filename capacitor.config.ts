@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 'com.apps.socialconnect',
   appName: 'chat-socket',
   webDir: 'www',
   bundledWebRuntime: false

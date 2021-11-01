@@ -2,7 +2,7 @@
   <button mat-icon-button class="menu-icon" aria-label="toggle side bar icon" (click)="sidebarToggle()">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>Shop App</span>
+  <a mat-button routerLink="/">Home</a>
   <span class="spacer"></span>
   <a *ngIf="!authService.isLoggedIn" mat-button routerLink="/register">Register</a>
   <a *ngIf="!authService.isLoggedIn" mat-button routerLink="/login">Login</a>

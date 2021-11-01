@@ -16,6 +16,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { GraphQLModule} from './graphql/graphql.module';
 import {LoginComponent} from './auth/login/login.component';
 import {RegisterComponent} from './auth/register/register.component';
+import {Deeplinks} from '@ionic-native/deeplinks/ngx';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {RegisterComponent} from './auth/register/register.component';
     HttpClientModule
   ],
   providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    Deeplinks
   ],
   bootstrap: [AppComponent],
 })
