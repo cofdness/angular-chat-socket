@@ -6,6 +6,7 @@ import {HttpHeaders} from '@angular/common/http';
 import { serverUri } from '../config.service';
 
 const uri = `${serverUri}/graphql`;
+console.log(serverUri);
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   const http = httpLink.create({uri});
   const middleware = new ApolloLink((operation, forward) => {

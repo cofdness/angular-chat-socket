@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {AuthService} from '../auth.service';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 import {UserService} from '../../user/user.service';
 import { serverUri } from '../../config.service';
 import { Platform} from '@ionic/angular';
+import {DeepLinkService} from '../../deep-link.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit {
     public router: Router,
     private route: ActivatedRoute,
     private userService: UserService,
-    private platform: Platform
+    private platform: Platform,
+    private deepLinkService: DeepLinkService
   ) { }
 
   ngOnInit(): void {
@@ -31,17 +33,32 @@ export class LoginComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required])
     });
+
+    //implement deeplink login call from web mobile to app
+    this.route.params.subscribe(params => {
+      const accessToken = params.access_token;
+      if (accessToken) {
+        alert(accessToken);
+        localStorage.setItem('token', accessToken);
+        this.userService.getUser().subscribe(() => {
+          if (this.authService.isLoggedIn) {
+            this.redirectAfterLoginSuccess();
+          }
+        });
+      }
+    });
+
     this.route.queryParams.subscribe(params => {
       if (params.access_token) {
         localStorage.setItem('token', params.access_token);
         this.userService.getUser().subscribe((user) => {
           if (this.authService.isLoggedIn) {
             if (this.platform.is('mobileweb')){
-              if (this.platform.is('ios')) {
-
-              }
+              // eslint-disable-next-line @typescript-eslint/naming-convention
+              this.deepLinkService.deeplink({access_token: params.access_token});
+            } else {
+              this.redirectAfterLoginSuccess();
             }
-            this.redirectAfterLoginSuccess();
           }
         });
       }

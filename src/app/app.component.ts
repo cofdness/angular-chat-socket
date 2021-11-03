@@ -1,22 +1,23 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {UserService} from "./user/user.service";
-import {Router} from "@angular/router";
-import {Deeplinks} from "@ionic-native/deeplinks/ngx";
-import {Platform} from "@ionic/angular";
-import {LoginComponent} from "./auth/login/login.component";
+import {Component, NgZone, OnInit} from '@angular/core';
+import {UserService} from './user/user.service';
+import {Router} from '@angular/router';
+import {Platform} from '@ionic/angular';
+import { App, URLOpenListenerEvent } from '@capacitor/app';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    private deepLinks: Deeplinks,
-    private platform: Platform
-  ) {}
+    private platform: Platform,
+    private zone: NgZone
+  ) {
+    this.initializeApp();
+  }
 
   ngOnInit(): void {
     const token = localStorage.getItem('token');
@@ -27,16 +28,39 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngAfterViewInit(): void {
-    this.platform.ready().then(() => {
-      if (this.platform.is('mobile')){
-        this.deepLinks.route({
-          '/login': LoginComponent
-        }).subscribe(match => {
-          console.log(match.$args);
-        });
-      }
+  initializeApp() {
+    App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
+      this.zone.run(() => {
+        const slug = event.url.split('chatsocket').pop();
+        if (slug) {
+          const queryString = slug.split('?').pop();
+          if (queryString) {
+            const params = new URLSearchParams(queryString);
+            const accessToken = params.get('access_token');
+            if (accessToken) {
+              this.router.navigate(['login', accessToken]).then();
+            }
+          }
+        }
+      });
     });
   }
+
+  // ngAfterViewInit(): void {
+  //   this.platform.ready().then(() => {
+  //     if (this.platform.is('mobile') && !this.platform.is('mobileweb')){
+  //       this.deepLinks.route({}).subscribe(match => {
+  //         alert(JSON.stringify(match));
+  //         const token = match.$args.access_token;
+  //         if (token) {
+  //           localStorage.setItem('token', token);
+  //           this.userService.getUser().subscribe(() => this.router.navigate(['user/user-info']));
+  //         }
+  //       }, noMatch => {
+  //         alert(JSON.stringify(noMatch));
+  //       });
+  //     }
+  //   });
+  // }
 
 }
