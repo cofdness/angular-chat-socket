@@ -7,7 +7,7 @@ import { serverUri } from '../config.service';
 
 const uri = `${serverUri}/graphql`;
 console.log(serverUri);
-export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
+export const createApollo = (httpLink: HttpLink): ApolloClientOptions<any> => {
   const http = httpLink.create({uri});
   const middleware = new ApolloLink((operation, forward) => {
     operation.setContext({
@@ -25,7 +25,7 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
     link,
     cache: new InMemoryCache(),
   };
-}
+};
 
 @NgModule({
   providers: [

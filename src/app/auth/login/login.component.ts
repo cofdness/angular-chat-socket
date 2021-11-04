@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit {
     this.route.params.subscribe(params => {
       const accessToken = params.access_token;
       if (accessToken) {
-        alert(accessToken);
         localStorage.setItem('token', accessToken);
         this.userService.getUser().subscribe(() => {
           if (this.authService.isLoggedIn) {
@@ -53,7 +52,8 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', params.access_token);
         this.userService.getUser().subscribe((user) => {
           if (this.authService.isLoggedIn) {
-            if (this.platform.is('mobileweb')){
+            // desktop for test locally
+            if (this.platform.is('mobileweb') || this.platform.is('desktop')){
               // eslint-disable-next-line @typescript-eslint/naming-convention
               this.deepLinkService.deeplink({access_token: params.access_token});
             } else {

@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import {Platform} from '@ionic/angular';
-import {environment} from "../environments/environment";
+import {environment} from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DeepLinkService {
 
-  constructor(private platform: Platform) { }
+  constructor() { }
 
   deeplink(params: any){
     let stringParams: string;
