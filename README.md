@@ -23,6 +23,8 @@ This server user angular on frontend and nodejs on backend. You need
 - Backend: on server folder `npm start`
 - IOS: `ionic capacitor run ios`
 - Android: `ionic capacitor run android`
+### Sync android and ios app
+- `ionic capacitor sync`
 
 ### Build
 - Take a look at ionic doc for build android and ios

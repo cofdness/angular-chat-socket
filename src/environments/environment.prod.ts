@@ -3,5 +3,5 @@ export const environment = {
   serverAddress: '192.168.31.214:3000',
   apiProtocol: 'https',
   clientProtocol: 'https',
-  deepLinkUri: 'com.myApp://chatsocket'
+  deepLinkUri: 'com.myapp://chatsocket'
 };
