@@ -16,7 +16,6 @@ export class LoginComponent implements OnInit {
 
   serverUriFacebook = `${serverUri}/auth/facebook`;
   loginFormGroup!: FormGroup;
-  message: string | undefined;
   errorStatus: number | undefined;
 
   constructor(

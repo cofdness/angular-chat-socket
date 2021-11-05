@@ -11,7 +11,7 @@ This project implement login social support IOS, Android, Web.
 
 ## How to run
 
-This server user angular on frontend and nodejs on backend. You need
+This server user angular on frontend and nodejs on backend.
 
 ### Config
 - add environment value in src folder

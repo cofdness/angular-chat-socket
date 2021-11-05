@@ -13,7 +13,7 @@ export class ThemeSwitchComponent implements OnInit {
   activeTheme!: ThemeOption;
 
   constructor(
-    private themeService: ThemeService,
+    public themeService: ThemeService,
   ) {
     this.themeService.getThemeOptions().subscribe(() => {
       this.activeTheme = this.themeService.themeOptions[0];
