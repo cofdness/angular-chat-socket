@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../auth/auth.service';
 import {User} from '../user';
+import {Platform} from "@ionic/angular";
+import {DeepLinkService} from "../../deep-link.service";
 
 @Component({
   selector: 'app-user-info',
@@ -11,10 +13,18 @@ export class UserInfoComponent implements OnInit {
 
   user: User;
 
-  constructor(private authService: AuthService) {
+  constructor(
+    private authService: AuthService,
+    private plaform: Platform,
+    private deepLinkService: DeepLinkService
+  ) {
     this.user = this.authService.user;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.plaform.is('mobileweb') || this.plaform.is('desktop')) {
+      this.deepLinkService.deeplink({access_token: localStorage.getItem('token')})
+    }
+  }
 
 }
