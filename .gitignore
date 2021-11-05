@@ -34,3 +34,4 @@ npm-debug.log*
 /server/.idea/
 /.gradle
 /package-lock.json
+/.firebase/hosting.d3d3.cache
