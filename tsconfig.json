@@ -13,13 +13,13 @@
     "target": "es2015",
     "module": "es2020",
     "lib": ["es2018", "dom", "esnext.asynciterable"],
-    "skipLibCheck": true,
-    "disableTypeScriptVersionCheck": true
+    "skipLibCheck": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictTemplates": true,
+    "disableTypeScriptVersionCheck": true
   }
 }
