@@ -2,6 +2,7 @@ import {Component, HostBinding, OnInit} from '@angular/core';
 import {SidebarService} from '../sidebar.service';
 import {Platform} from '@angular/cdk/platform';
 import {AuthService} from '../auth/auth.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
@@ -14,7 +15,8 @@ export class NavbarComponent implements OnInit {
   constructor(
     public sidebarService: SidebarService,
     public authService: AuthService,
-    public platform: Platform
+    public platform: Platform,
+    private router: Router
   ) {
   }
 
@@ -32,5 +34,6 @@ export class NavbarComponent implements OnInit {
 
   logout(){
     this.authService.logout();
+    this.router.navigate(['login']).then();
   }
 }

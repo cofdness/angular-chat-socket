@@ -22,8 +22,8 @@ export class UserInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.plaform.is('mobileweb') || this.plaform.is('desktop')) {
-      this.deepLinkService.deeplink({access_token: localStorage.getItem('token')})
+    if (this.plaform.is('mobileweb')) {
+      this.deepLinkService.deeplink({access_token: localStorage.getItem('token')});
     }
   }
 

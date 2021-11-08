@@ -30,3 +30,5 @@ This server user angular on frontend and nodejs on backend.
 - Take a look at ionic doc for build android and ios
 - web build: `ng build`
 
+## Demo
+https://angularchat-3abc4.web.app

@@ -55,7 +55,7 @@ export class AuthService {
     localStorage.removeItem('token');
     this.isLoggedIn = false;
     this.user = {email: '', name: '', picture: ''};
-    this.router.navigate(['login']).then();
+    // this.router.navigate(['login']).then();
   }
 
   handleError(error: HttpErrorResponse): HttpErrorResponse {
