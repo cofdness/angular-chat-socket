@@ -15,6 +15,7 @@ import {DeepLinkService} from '../../deep-link.service';
 export class LoginComponent implements OnInit {
 
   serverUriFacebook = `${serverUri}/auth/facebook`;
+  serverUriGoogle = `${serverUri}/auth/google`;
   loginFormGroup!: FormGroup;
   errorStatus: number | undefined;
 
@@ -100,6 +101,10 @@ export class LoginComponent implements OnInit {
 
   get password(): AbstractControl | null | undefined {
     return  this.loginFormGroup?.get('password');
+  }
+
+  getServerUri(service: string): string {
+    return `${serverUri}/auth/${service}`;
   }
 
 }
