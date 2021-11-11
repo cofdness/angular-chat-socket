@@ -26,12 +26,17 @@
   <mat-card class="mat-elevation-z7">
     <div class="form-common service-button">
       <a mat-raised-button class="facebook-button" [href]="getServerUri('facebook')">
-        <mat-icon>facebook</mat-icon><span>Login with Facebook</span>
+        <span>Login use Facebook</span>
       </a>
     </div>
     <div class="form-common service-button">
       <a mat-raised-button class="google-button" [href]="getServerUri('google')">
-        <mat-icon url="assets/icon/google-logo.svg">google</mat-icon><span>Login with Google</span>
+        <span>Login use Google</span>
+      </a>
+    </div>
+    <div class="form-common service-button">
+      <a mat-raised-button class="github-button" [href]="getServerUri('github')">
+        <span>Login use Github</span>
       </a>
     </div>
   </mat-card>
