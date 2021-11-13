@@ -7,7 +7,8 @@ export const environment = {
   serverAddress: '192.168.31.214:3000',
   apiProtocol: 'https',
   clientProtocol: 'https',
-  deepLinkUri: 'com.myApp://chatsocket'
+  deepLinkUri: 'com.myApp://chatsocket',
+  facebookID: '106191548551043'
 };
 
 /*

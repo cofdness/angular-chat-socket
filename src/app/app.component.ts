@@ -3,6 +3,8 @@ import {UserService} from './user/user.service';
 import {Router} from '@angular/router';
 import {Platform} from '@ionic/angular';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
+import {FacebookService, InitParams} from 'ngx-facebook';
+import {environment} from "../environments/environment";
 
 @Component({
   selector: 'app-root',
@@ -14,7 +16,8 @@ export class AppComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private platform: Platform,
-    private zone: NgZone
+    private zone: NgZone,
+    private facebookService: FacebookService
   ) {
     this.initializeApp();
   }
@@ -44,23 +47,12 @@ export class AppComponent implements OnInit {
         }
       });
     });
+    const initFacebookParams: InitParams = {
+      xfbml: true,
+      version: 'v12.0',
+      appId: environment.facebookID
+    };
+    this.facebookService.init(initFacebookParams).then();
   }
-
-  // ngAfterViewInit(): void {
-  //   this.platform.ready().then(() => {
-  //     if (this.platform.is('mobile') && !this.platform.is('mobileweb')){
-  //       this.deepLinks.route({}).subscribe(match => {
-  //         alert(JSON.stringify(match));
-  //         const token = match.$args.access_token;
-  //         if (token) {
-  //           localStorage.setItem('token', token);
-  //           this.userService.getUser().subscribe(() => this.router.navigate(['user/user-info']));
-  //         }
-  //       }, noMatch => {
-  //         alert(JSON.stringify(noMatch));
-  //       });
-  //     }
-  //   });
-  // }
 
 }
