@@ -38,7 +38,7 @@ import {FacebookModule} from "ngx-facebook";
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FacebookModule.forRoot()
+    // FacebookModule.forRoot()
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

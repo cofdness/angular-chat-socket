@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     private platform: Platform,
     private zone: NgZone,
-    private facebookService: FacebookService
+    // private facebookService: FacebookService
   ) {
     this.initializeApp();
   }
@@ -47,12 +47,12 @@ export class AppComponent implements OnInit {
         }
       });
     });
-    const initFacebookParams: InitParams = {
-      xfbml: true,
-      version: 'v12.0',
-      appId: environment.facebookID
-    };
-    this.facebookService.init(initFacebookParams).then();
+    // const initFacebookParams: InitParams = {
+    //   xfbml: true,
+    //   version: 'v12.0',
+    //   appId: environment.facebookID
+    // };
+    // this.facebookService.init(initFacebookParams).then();
   }
 
 }
