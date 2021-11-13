@@ -4,6 +4,9 @@
   </button>
   <a mat-button routerLink="/">Home</a>
   <span class="spacer"></span>
+  <div class="fb-customerchat" page_id="106191548551043">
+    abc
+  </div>
   <a *ngIf="!authService.isLoggedIn" mat-button routerLink="/register">Register</a>
   <a *ngIf="!authService.isLoggedIn" mat-button routerLink="/login">Login</a>
   <a *ngIf="authService.isLoggedIn" mat-button [matMenuTriggerFor]="userMenu"><img class="circle" [src]="authService.user.picture"><span>{{authService.user.name}}</span></a>
