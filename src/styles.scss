@@ -68,4 +68,9 @@ div.mat-list-item-content {
   width: 320px;
 }
 
+iframe {
+  width: 0 !important;
+  height: 0 !important;
+}
+
 @import "material-fallback";
