@@ -3,7 +3,6 @@ import {UserService} from './user/user.service';
 import {Router} from '@angular/router';
 import {Platform} from '@ionic/angular';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
-import {FacebookService, InitParams} from "ngx-facebook";
 
 @Component({
   selector: 'app-root',
@@ -15,8 +14,7 @@ export class AppComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private platform: Platform,
-    private zone: NgZone,
-    private facebookService: FacebookService
+    private zone: NgZone
   ) {
     this.initializeApp();
   }
@@ -28,14 +26,6 @@ export class AppComponent implements OnInit {
         () => this.router.navigate(['user/user-info'])
       );
     }
-
-    // init facebook service
-    const initParams: InitParams = {
-      xfbml: true,
-      version: 'v12.0',
-      appId: '106191548551043'
-    };
-    this.facebookService.init(initParams).then();
   }
 
   initializeApp() {
