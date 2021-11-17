@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
   serverAddress: 'angular-chat-socket.herokuapp.com',
-  apiProtocol: 'http',
-  clientProtocol: 'http',
+  apiProtocol: 'https',
+  clientProtocol: 'https',
   deepLinkUri: 'com.myapp://chatsocket',
   facebookID: '106191548551043',
   socketProtocol: 'wss'
