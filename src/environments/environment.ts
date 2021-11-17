@@ -5,10 +5,11 @@
 export const environment = {
   production: false,
   serverAddress: '192.168.31.214:3000',
-  apiProtocol: 'https',
-  clientProtocol: 'https',
+  apiProtocol: 'http',
+  clientProtocol: 'http',
   deepLinkUri: 'com.myApp://chatsocket',
-  facebookID: '106191548551043'
+  facebookID: '106191548551043',
+  socketProtocol: 'wss'
 };
 
 /*

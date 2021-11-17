@@ -37,6 +37,7 @@
     "apollo-angular": "^2.6.0",
     "firebase": "^9.1.0",
     "graphql": "^15.7.2",
+    "graphql-ws": "^5.5.5",
     "ngx-facebook": "^3.0.0-0",
     "react": "^17.0.2",
     "rxfire": "^6.0.0",
