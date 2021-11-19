@@ -55,7 +55,7 @@ export const createApollo = (httpLink: HttpLink): ApolloClientOptions<any> => {
   );
   return {
     link,
-    cache: new InMemoryCache({resultCaching: false}),
+    cache: new InMemoryCache(),
   };
 };
 
