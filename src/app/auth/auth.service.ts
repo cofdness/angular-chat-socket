@@ -5,6 +5,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {User} from '../user/user';
 import { Apollo, gql } from 'apollo-angular';
 import {Router} from '@angular/router';
+import { Storage } from '@capacitor/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class AuthService {
   ) {
   }
 
-  login(email: string, password: string): Observable<boolean>{
+   login(email: string, password: string): Observable<boolean>{
     const login = gql`
       mutation Login($email: String!, $password: String!) {
         login(input: {
@@ -43,19 +44,31 @@ export class AuthService {
         email,
         password
       }
-    }).pipe(map(({data}) => {
+    }).pipe(map( ({data}) => {
       // @ts-ignore
         this.user = data.login as User;
-        localStorage.setItem('token', this.user.accessToken.token);
+        this.setItemToStorage('token', this.user.accessToken.token).then();
         return this.isLoggedIn = true;
     } ));
   }
 
-  logout(): void {
-    localStorage.removeItem('token');
+  logout(): Promise<void> {
     this.isLoggedIn = false;
     this.user = {email: '', name: '', picture: ''};
-    // this.router.navigate(['login']).then();
+    return this.removeItemFromStorage('token');
+  }
+
+  setItemToStorage(key, value): Promise<void>{
+    return Storage.set({
+      key,
+      value
+    });
+  }
+  getItemFromStorage(key) {
+    return Storage.get({key});
+  }
+  removeItemFromStorage(key) {
+    return Storage.remove({key});
   }
 
   handleError(error: HttpErrorResponse): HttpErrorResponse {

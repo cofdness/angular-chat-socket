@@ -9,7 +9,7 @@ import {map} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserService {
-
+  isAppUrlOpen = false;
   constructor(
     private authService: AuthService,
     private apollo: Apollo

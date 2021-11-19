@@ -3,6 +3,7 @@ import {UserService} from './user/user.service';
 import {Router} from '@angular/router';
 import {Platform} from '@ionic/angular';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
+import { Storage } from '@capacitor/storage';
 
 @Component({
   selector: 'app-root',
@@ -19,11 +20,23 @@ export class AppComponent implements OnInit {
     this.initializeApp();
   }
 
-  ngOnInit(): void {
-    const token = localStorage.getItem('token');
+  async ngOnInit(): Promise<void> {
+    const token = await Storage.get({key:'token'});
     if (token) {
       this.userService.getUser().subscribe(
-        () => this.router.navigate(['user/user-info'])
+        () => {
+          if (this.platform.is('mobileweb') || this.platform.is('desktop') ){
+            this.router.navigate(['user/user-info']).then();
+          }
+          if (this.platform.is('capacitor')) {
+            // temp solution on app, if user open app not from deeplink
+            setTimeout(()=> {
+              if (!this.userService.isAppUrlOpen) {
+                this.router.navigate(['user/user-info']).then();
+              }
+            }, 1000);
+          }
+        }
       );
     }
   }
@@ -31,6 +44,7 @@ export class AppComponent implements OnInit {
   initializeApp() {
     App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
       this.zone.run(() => {
+        this.userService.isAppUrlOpen = true;
         const slug = event.url.split('chatsocket').pop();
         if (slug) {
           const queryString = slug.split('?').pop();

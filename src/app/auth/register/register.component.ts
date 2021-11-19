@@ -54,8 +54,9 @@ export class RegisterComponent implements OnInit {
     this.userService.createUser(this.newUser).subscribe((user: User) => {
       this.authService.user = user;
       this.authService.isLoggedIn = true;
-      localStorage.setItem('token', user.accessToken.token);
-      this.router.navigate(['/user/user-info']).then();
+      this.authService.setItemToStorage('token', user.accessToken.token).then(() => {
+        this.router.navigate(['/user/user-info']).then();
+      });
     });
   }
 
