@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  serverAddress: 'angular-chat-socket.herokuapp.com',
+  serverAddress: '192.168.31.214:3000',
   apiProtocol: 'https',
   clientProtocol: 'https',
   deepLinkUri: 'com.myApp://chatsocket',

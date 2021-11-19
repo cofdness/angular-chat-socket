@@ -1,8 +1,7 @@
 import {NgModule} from '@angular/core';
 import {APOLLO_OPTIONS} from 'apollo-angular';
-import {ApolloClientOptions, InMemoryCache, ApolloLink, split} from '@apollo/client/core';
+import {ApolloClientOptions, InMemoryCache, split} from '@apollo/client/core';
 import {HttpLink} from 'apollo-angular/http';
-import {HttpHeaders} from '@angular/common/http';
 import {serverUri, socketUri} from '../config.service';
 import {WebSocketLink} from './wsLink';
 import {getMainDefinition} from '@apollo/client/utilities';
@@ -30,24 +29,12 @@ export const createApollo = (httpLink: HttpLink): ApolloClientOptions<any> => {
       };
     }
   });
-  // const middleware = new ApolloLink((operation, forward) => {
-  //   let token;
-  //   Storage.get({key: token}).then(({value}) => {
-  //     operation.setContext({
-  //       headers: new HttpHeaders().set(
-  //         'Authorization',
-  //         `Bearer ${token}`
-  //       )
-  //     });
-  //   });
-  //   return forward(operation);
-  // });
   const authMiddleware = setContext(operation =>
     Storage.get({key: 'token'}).then(token => ({
         // Make sure to actually set the headers here
         headers: {
           authorization: `Bearer ${token.value}`,
-        },
+        }
       }))
   );
 
@@ -68,7 +55,7 @@ export const createApollo = (httpLink: HttpLink): ApolloClientOptions<any> => {
   );
   return {
     link,
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({resultCaching: false}),
   };
 };
 

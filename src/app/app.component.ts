@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
               if (!this.userService.isAppUrlOpen) {
                 this.router.navigate(['user/user-info']).then();
               }
-            }, 1000);
+            }, 200);
           }
         }
       );
@@ -45,17 +45,20 @@ export class AppComponent implements OnInit {
     App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
       this.zone.run(() => {
         this.userService.isAppUrlOpen = true;
-        const slug = event.url.split('chatsocket').pop();
-        if (slug) {
-          const queryString = slug.split('?').pop();
-          if (queryString) {
-            const params = new URLSearchParams(queryString);
-            const accessToken = params.get('access_token');
-            if (accessToken) {
-              this.router.navigate(['login', accessToken]).then();
+        App.getLaunchUrl().then((result) => {
+          const slug = result.url.split('chatsocket').pop();
+          if (slug) {
+            const queryString = slug.split('?').pop();
+            if (queryString) {
+              const params = new URLSearchParams(queryString);
+              const accessToken = params.get('access_token');
+              console.log(accessToken);
+              if (accessToken) {
+                this.router.navigate(['login', accessToken]).then();
+              }
             }
           }
-        }
+        });
       });
     });
   }
