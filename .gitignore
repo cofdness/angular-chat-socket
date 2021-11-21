@@ -35,3 +35,4 @@ npm-debug.log*
 /.gradle
 /package-lock.json
 /.firebase/hosting.d3d3.cache
+/.angular/
