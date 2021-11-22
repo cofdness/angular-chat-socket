@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
               if (this.authService.isLoggedIn) {
                 if (
                   this.platform.is('mobileweb')
-                  || this.platform.is('desktop')
+                  // || this.platform.is('desktop')
                 ){
                   // eslint-disable-next-line @typescript-eslint/naming-convention
                   this.deepLinkService.deeplink({access_token: params.access_token});

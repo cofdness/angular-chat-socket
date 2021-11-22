@@ -2,7 +2,7 @@ import {Component, HostBinding, OnInit} from '@angular/core';
 import {SidebarService} from '../sidebar.service';
 import {Platform} from '@angular/cdk/platform';
 import {AuthService} from '../auth/auth.service';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -34,7 +34,11 @@ export class NavbarComponent implements OnInit {
 
   logout(){
     this.authService.logout().then(() => {
-      this.router.navigate(['login']).then(() => window.location.reload());
+      this.router.navigate(['login']).then(() => {
+        // refresh after log out
+        window.location.reload();
+        }
+      );
     });
   }
 }

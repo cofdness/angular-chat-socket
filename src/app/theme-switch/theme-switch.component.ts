@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 
 import {ThemeOption} from '../theme-option';
 import {ThemeService} from '../theme.service';
+import { Storage } from '@capacitor/storage';
 
 @Component({
   selector: 'app-theme-switch',
@@ -15,11 +16,19 @@ export class ThemeSwitchComponent implements OnInit {
   constructor(
     public themeService: ThemeService,
   ) {
-    this.themeService.getThemeOptions().subscribe(() => {
+    this.themeService.getThemeOptions().subscribe((themeOptions) => {
       this.activeTheme = this.themeService.themeOptions[0];
-
-      //default theme
-      this.themeService.setTheme(this.activeTheme);
+      Storage.get({key: 'theme'}).then(theme => {
+        if (theme.value) {
+          for (const themeOption of themeOptions) {
+            if (theme.value === themeOption.value) {
+              this.activeTheme = themeOption;
+              break;
+            }
+          }
+        }
+        this.themeService.setTheme(this.activeTheme);
+      });
     });
   }
 
@@ -27,8 +36,13 @@ export class ThemeSwitchComponent implements OnInit {
   }
 
   onChangeTheme(themeOption: ThemeOption) {
-    this.activeTheme = themeOption;
-    this.themeService.setTheme(themeOption);
+    Storage.set({
+      key: 'theme',
+      value: themeOption.value
+    }).then(() => {
+      this.activeTheme = themeOption;
+      this.themeService.setTheme(themeOption);
+    });
   }
 
 }
