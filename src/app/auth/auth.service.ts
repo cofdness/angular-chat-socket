@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import { map } from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {User} from '../user/user';
@@ -12,6 +12,7 @@ import { Storage } from '@capacitor/storage';
 })
 export class AuthService {
   user: User | undefined;
+  isLoggedIn$: BehaviorSubject<boolean>;
   isLoggedIn = false;
   redirectUrl: string | null = null;
   httpError: HttpErrorResponse | undefined;

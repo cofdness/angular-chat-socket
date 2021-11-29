@@ -7,9 +7,10 @@ import {SelectivePreloadingStrategyService} from './selective-preloading-strateg
 import {HomeComponent} from './home/home.component';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
+  {path: '', redirectTo: '/home', pathMatch: 'full'},
+  {path: 'home', component: HomeComponent},
   {path:'login/:access_token', component: LoginComponent},
-  {path: 'login', component: LoginComponent, canLoad: [AuthGuard]},
+  {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule), canLoad: [AuthGuard]}
 ];
