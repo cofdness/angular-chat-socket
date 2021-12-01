@@ -1,6 +1,6 @@
 <div class="form-container">
   <mat-card class="mat-elevation-z7">
-    <form class="form-common" *ngIf="!authService.isLoggedIn" [formGroup]="loginFormGroup" (ngSubmit)="login()">
+    <form class="form-common" *ngIf="(authService.isLoggedIn$ | async) === false" [formGroup]="loginFormGroup" (ngSubmit)="login()">
       <mat-form-field class="full-width" appearance="standard">
         <mat-label>Email</mat-label>
         <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
