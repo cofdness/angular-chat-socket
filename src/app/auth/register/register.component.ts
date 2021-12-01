@@ -52,8 +52,8 @@ export class RegisterComponent implements OnInit {
       password: this.registerForm.get('password').value as string
     };
     this.userService.createUser(this.newUser).subscribe((user: User) => {
-      this.authService.user = user;
-      this.authService.isLoggedIn = true;
+      this.authService.nextUser$(user);
+      this.authService.nextIsLoggedIn$(true);
       this.authService.setItemToStorage('token', user.accessToken.token).then(() => {
         this.router.navigate(['/user/user-info']).then();
       });

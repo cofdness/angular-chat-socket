@@ -38,10 +38,8 @@ export class LoginComponent implements OnInit {
       if (accessToken) {
         this.authService.logout().then(() => {
           this.authService.setItemToStorage('token', accessToken).then(() => {
-            this.userService.getUser().subscribe(() => {
-              if (this.authService.isLoggedIn) {
-                this.redirectAfterLoginSuccess();
-              }
+            this.userService.getCurrentUser().subscribe(() => {
+              this.redirectAfterLoginSuccess();
             });
           });
         });
@@ -52,17 +50,15 @@ export class LoginComponent implements OnInit {
       if (params.access_token) {
         this.authService.logout().then(() => {
           this.authService.setItemToStorage('token', params.access_token).then(() => {
-            this.userService.getUser().subscribe((user) => {
-              if (this.authService.isLoggedIn) {
-                if (
-                  this.platform.is('mobileweb')
-                  // || this.platform.is('desktop')
-                ){
-                  // eslint-disable-next-line @typescript-eslint/naming-convention
-                  this.deepLinkService.deeplink({access_token: params.access_token});
-                } else {
-                  this.redirectAfterLoginSuccess();
-                }
+            this.userService.getCurrentUser().subscribe((user) => {
+              if (
+                this.platform.is('mobileweb')
+                // || this.platform.is('desktop')
+              ){
+                // eslint-disable-next-line @typescript-eslint/naming-convention
+                this.deepLinkService.deeplink({access_token: params.access_token});
+              } else {
+                this.redirectAfterLoginSuccess();
               }
             });
           });
@@ -72,10 +68,8 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    this.authService.login(this.email?.value, this.password?.value).subscribe(() => {
-      if (this.authService.isLoggedIn) {
+    this.authService.login(this.email?.value, this.password?.value).subscribe((user) => {
         this.redirectAfterLoginSuccess();
-      }
     }, error => {
       this.errorStatus = this.authService.handleError(error).status;
     });

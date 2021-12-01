@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     const token = await Storage.get({key:'token'});
     if (token) {
-      this.userService.getUser().subscribe(
+      this.userService.getCurrentUser().subscribe(
         () => {
           if (this.platform.is('mobileweb') || this.platform.is('desktop') ){
             this.router.navigate(['user/user-info']).then();

@@ -46,11 +46,18 @@ h1.app-name {
   overflow-y: hidden;
   transition: 300ms ease-in-out;
   height: 0;
-  padding-left: 16px;
 }
 .submenu.expanded {
   height: 144px;
 }
 .mat-list-item {
   cursor: pointer;
+}
+
+.submenu > .mat-list-item {
+  padding-left: 16px;
+}
+
+.mat-list-base {
+  padding-top: 0 !important;
 }

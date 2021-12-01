@@ -6,14 +6,16 @@ import {User} from '../user/user';
 import { Apollo, gql } from 'apollo-angular';
 import {Router} from '@angular/router';
 import { Storage } from '@capacitor/storage';
+import {mutationGraphql} from '../graphql/mutation.graphql';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  user: User | undefined;
+  // user: User | null;
   isLoggedIn$: BehaviorSubject<boolean>;
-  isLoggedIn = false;
+  user$: BehaviorSubject<User>;
+  // isLoggedIn = false;
   redirectUrl: string | null = null;
   httpError: HttpErrorResponse | undefined;
 
@@ -21,41 +23,30 @@ export class AuthService {
     private apollo: Apollo,
     private router: Router
   ) {
+    this.isLoggedIn$ = new BehaviorSubject<boolean>(false);
+    this.user$ = new BehaviorSubject<User>(null);
   }
 
-   login(email: string, password: string): Observable<boolean>{
-    const login = gql`
-      mutation Login($email: String!, $password: String!) {
-        login(input: {
-          email: $email,
-          password: $password
-        }){
-          email
-          name
-          picture
-          accessToken {
-            token
-          }
-        }
-      }
-    `;
+   login(email: string, password: string): Observable<User>{
     return this.apollo.mutate({
-      mutation: login,
+      mutation: mutationGraphql.login,
       variables: {
         email,
         password
       }
     }).pipe(map( ({data}) => {
       // @ts-ignore
-        this.user = data.login as User;
-        this.setItemToStorage('token', this.user.accessToken.token).then();
-        return this.isLoggedIn = true;
+      const user = data.login as User;
+      this.nextUser$(user);
+      this.setItemToStorage('token', user.accessToken.token).then();
+      this.nextIsLoggedIn$(true);
+      return user;
     } ));
   }
 
   logout(): Promise<void> {
-    this.isLoggedIn = false;
-    this.user = {email: '', name: '', picture: ''};
+    this.isLoggedIn$.next(false);
+    this.nextUser$(null);
     return this.removeItemFromStorage('token');
   }
 
@@ -70,6 +61,14 @@ export class AuthService {
   }
   removeItemFromStorage(key) {
     return Storage.remove({key});
+  }
+
+  nextIsLoggedIn$(value: boolean) {
+    this.isLoggedIn$.next(value);
+  }
+
+  nextUser$(user: User) {
+    this.user$.next(user);
   }
 
   handleError(error: HttpErrorResponse): HttpErrorResponse {

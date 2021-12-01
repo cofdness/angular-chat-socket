@@ -3,7 +3,9 @@ import { AuthService } from '../auth/auth.service';
 import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { User } from './user';
-import {map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { queryGraphql } from '../graphql/query.graphql';
+import {mutationGraphql} from '../graphql/mutation.graphql';
 
 @Injectable({
   providedIn: 'root'
@@ -15,45 +17,22 @@ export class UserService {
     private apollo: Apollo
   ) { }
 
-  getUser(): Observable<User>{
-    const user = gql`
-      query User {
-        user {
-          name
-          email
-          picture
-        }
-      }
-    `;
+  getCurrentUser(): Observable<User>{
 
     return this.apollo.query({
-      query: user
+      query: queryGraphql.currentUser
     }).pipe(map(({data}) => {
-        this.authService.isLoggedIn = true;
+        this.authService.isLoggedIn$.next(true);
         // @ts-ignore
-       return this.authService.user = data.user as User;
+        const user: User = data.user as User;
+        this.authService.user$.next(user);
+        return user;
   }));
   }
 
   createUser({email, password, role = 'consumer'}): Observable<User> {
-    const createUser = gql`
-        mutation CreateUser($email: String!, $password: String!, $role: String) {
-          createUser(input: {
-            email: $email
-            password: $password
-            role: $role
-          }){
-            email
-            name
-            picture
-            accessToken {
-              token
-            }
-          }
-        }
-    `;
     return this.apollo.mutate({
-      mutation: createUser,
+      mutation: mutationGraphql.createUser,
       variables: {
         email,
         password,

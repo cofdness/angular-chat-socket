@@ -13,3 +13,13 @@ export interface UserInput {
   password: string;
   name?: string;
 }
+
+export interface UserCompact {
+  id: string;
+  name: string;
+  picture: string;
+}
+
+export interface Users {
+  users: UserCompact[];
+}

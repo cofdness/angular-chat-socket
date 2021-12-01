@@ -36,6 +36,9 @@
   .mat-sidenav {
     background-color: mat.get-color-from-palette($accent-palette, 700);
   }
+  .mat-list-active {
+    background-color: mat.get-color-from-palette($accent-palette, 400);
+  }
 }
 
 .deeppurple-amber {

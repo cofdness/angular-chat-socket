@@ -36,7 +36,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   checkLogin(url): boolean | UrlTree {
-    if (this.authService.isLoggedIn) {
+    if (this.authService.isLoggedIn$.getValue()) {
       return true;
     }
     else {
@@ -44,5 +44,4 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       return this.router.createUrlTree(['/login']);
     }
   }
-
 }

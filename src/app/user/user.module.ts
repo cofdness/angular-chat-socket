@@ -4,12 +4,14 @@ import { UserRoutingModule } from './user-routing.module';
 import {UserComponent} from './user/user.component';
 import {UserInfoComponent} from './user-info/user-info.component';
 import {MaterialModule} from '../material/material.module';
+import {FriendsComponent} from './friends/friends.component';
 
 
 @NgModule({
   declarations: [
     UserComponent,
-    UserInfoComponent
+    UserInfoComponent,
+    FriendsComponent
   ],
   imports: [
     CommonModule,
