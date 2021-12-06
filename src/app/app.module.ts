@@ -16,6 +16,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { GraphQLModule} from './graphql/graphql.module';
 import {LoginComponent} from './auth/login/login.component';
 import {RegisterComponent} from './auth/register/register.component';
+import {UserListComponent} from './user-list/user-list.component';
+import {HomeComponent} from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import {RegisterComponent} from './auth/register/register.component';
     NavbarComponent,
     SidebarComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    UserListComponent,
+    HomeComponent
   ],
   entryComponents: [],
   imports: [

@@ -4,9 +4,15 @@ export const queryGraphql = {
   currentUser : gql`
     query User {
       user {
+        id
         name
         email
         picture
+        friends {
+          id
+          name
+          picture
+        }
       }
     }
   `,

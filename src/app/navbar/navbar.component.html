@@ -8,11 +8,15 @@
     <a mat-button routerLink="/register">Register</a>
     <a mat-button routerLink="/login">Login</a>
   </ng-container>
-    <a mat-button [matMenuTriggerFor]="userMenu" *ngIf="(authService.isLoggedIn$ | async) === true">
-      <img class="circle" [src]="(authService.user$ | async)?.picture">
-      <span>{{(authService.user$ | async)?.name}}</span>
-    </a>
-
+<!--  <mat-form-field>-->
+<!--    <input type="text" matInput placeholder="Search users">-->
+<!--    <button matSuffix mat-button><mat-icon >search</mat-icon></button>-->
+<!--  </mat-form-field>-->
+  <a mat-button routerLink="/user-list">User List</a>
+  <a mat-button [matMenuTriggerFor]="userMenu" *ngIf="(authService.isLoggedIn$ | async) === true">
+    <img class="circle" [src]="(authService.user$ | async)?.picture">
+    <span>{{(authService.user$ | async)?.name}}</span>
+  </a>
 
   <app-theme-switch></app-theme-switch>
 </mat-toolbar>

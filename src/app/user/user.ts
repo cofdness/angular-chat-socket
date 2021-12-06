@@ -1,8 +1,10 @@
 export interface User {
+  id: string;
   name: string;
   email: string;
   picture: string;
   accessToken?: Token;
+  friends: UserCompact[];
 }
 export interface Token {
   token: string;

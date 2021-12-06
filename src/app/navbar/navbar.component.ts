@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   @HostBinding('style.top') topPosition;
-
+  value = '';
   constructor(
     private sidebarService: SidebarService,
     public authService: AuthService,
