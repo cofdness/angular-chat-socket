@@ -18,6 +18,8 @@ import {LoginComponent} from './auth/login/login.component';
 import {RegisterComponent} from './auth/register/register.component';
 import {UserListComponent} from './user-list/user-list.component';
 import {HomeComponent} from './home/home.component';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {FooterComponent} from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -28,12 +30,14 @@ import {HomeComponent} from './home/home.component';
     LoginComponent,
     RegisterComponent,
     UserListComponent,
-    HomeComponent
+    HomeComponent,
+    FooterComponent
   ],
   entryComponents: [],
   imports: [
     BrowserModule,
     GraphQLModule,
+    FlexLayoutModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     MaterialModule,

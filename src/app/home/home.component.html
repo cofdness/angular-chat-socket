@@ -1,11 +1,10 @@
 <div class="form-container">
-  <h1>This website for demo purpose only</h1>
-  <ul>
-    <li>Change theme color</li>
-    <li>Register new user</li>
-    <li>Login use social account: Facebook, Google, Github</li>
-    <li>User list: auto update if new user create somewhere</li>
-    <li>Add friend (soon)</li>
-    <li>Chat (soon)</li>
-  </ul>
+  <h3>This website for demo purpose only</h3>
+  <mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let feature of features">
+      <mat-icon mat-list-icon *ngIf="feature.done" color="accent">done</mat-icon>
+      <mat-icon mat-list-icon *ngIf="!feature.done" color="warn">code</mat-icon>
+      <div mat-line>{{feature.title}}</div>
+    </mat-list-item>
+  </mat-list>
 </div>

@@ -39,6 +39,10 @@
   .mat-list-active {
     background-color: mat.get-color-from-palette($accent-palette, 400);
   }
+  .footer {
+    background-color: mat.get-color-from-palette($primary-palette);
+    color: white;
+  }
 }
 
 .deeppurple-amber {

@@ -31,8 +31,16 @@
       </mat-list>
     </mat-sidenav>
 
-    <mat-sidenav-content>
-      <router-outlet></router-outlet>
+    <mat-sidenav-content fxLayout="column">
+
+        <div fxFlex>
+          <router-outlet></router-outlet>
+        </div>
+
+<!--        <div fxFlexOffset="auto" style="display: flex; justify-content: center">-->
+<!--          -->
+<!--        </div>-->
+
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
