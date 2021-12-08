@@ -21,11 +21,12 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.platform.IOS) {
-      this.topPosition = '16px';
-    } else {
-      this.topPosition = 0;
-    }
+    // if (this.platform.IOS) {
+    //   this.topPosition = '16px';
+    // } else {
+    //   this.topPosition = 0;
+    // }
+    this.topPosition = 0;
   }
 
   sidebarToggle() {
