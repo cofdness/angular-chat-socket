@@ -20,10 +20,12 @@ import {UserListComponent} from './user-list/user-list.component';
 import {HomeComponent} from './home/home.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FooterComponent} from './footer/footer.component';
+import {StickyHeaderComponent} from './sticky-header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    StickyHeaderComponent,
     ThemeSwitchComponent,
     NavbarComponent,
     SidebarComponent,
@@ -36,6 +38,7 @@ import {FooterComponent} from './footer/footer.component';
   entryComponents: [],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     GraphQLModule,
     FlexLayoutModule,
     IonicModule.forRoot(),
@@ -44,7 +47,7 @@ import {FooterComponent} from './footer/footer.component';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

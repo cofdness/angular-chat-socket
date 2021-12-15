@@ -4,15 +4,22 @@
   height: 100vh;
 }
 .container {
-  margin-top: 64px;
-  height: calc(100vh - 64px);
+  //margin-top: 64px;
+  //min-height: calc(100vh - 64px);
+  //display: block;
 }
 
 @media (max-width: 599px) {
   .container {
-    margin-top: 56px;
-    height: calc(100vh - 56px);
+    //margin-top: 56px;
+    //min-height: calc(100vh - 56px);
+    //display: block;
   }
+}
+
+.block{
+  display: block;
+  height: 50vh;
 }
 
 

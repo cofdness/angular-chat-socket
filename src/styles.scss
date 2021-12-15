@@ -33,11 +33,11 @@
   //  //  //background-color: mat.get-color-from-palette($accent-palette, 600);
   //  //}
   //
-  .mat-sidenav {
-    background-color: mat.get-color-from-palette($accent-palette, 700);
-  }
+  //.mat-sidenav {
+  //  background-color: mat.get-color-from-palette($accent-palette, 700);
+  //}
   .mat-list-active {
-    background-color: mat.get-color-from-palette($accent-palette, 400);
+    background-color: mat.get-color-from-palette($accent-palette, 200);
   }
   .footer {
     background-color: mat.get-color-from-palette($primary-palette);
@@ -101,4 +101,9 @@ div.mat-list-item-content {
 //  height: 0 !important;
 //}
 
-@import "material-fallback";
+//@import "material-fallback";
+//.white-space-wrap {
+//  white-space: unset !important;
+//}
+
+//html, body { height: 100% }
