@@ -8,22 +8,28 @@
       <mat-list>
         <mat-list-item routerLink="home" [routerLinkActive]="['mat-list-active']"> Home </mat-list-item>
         <mat-divider></mat-divider>
-        <ng-container *ngIf="authService.isLoggedIn$ | async">
-          <mat-list-item (click)="showSubmenu = !showSubmenu" >
-            <span>User menu</span>
-            <span class="spacer"></span>
-            <button mat-button mat-icon-button >
-              <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu}">expand_more</mat-icon>
-            </button>
-          </mat-list-item>
-          <div class="submenu" [ngClass]="{'expanded' : showSubmenu}">
-            <mat-list-item routerLink="user/user-info" [routerLinkActive]="['mat-list-active']">Info</mat-list-item>
-            <mat-list-item routerLink="user/friends" [routerLinkActive]="['mat-list-active']">Friends</mat-list-item>
-            <mat-list-item [routerLinkActive]="['mat-list-active']">Chat</mat-list-item>
-          </div>
+        <ng-container *ngIf="sidebarService.mobileRes | async">
+          <ng-container *ngIf="(authService.isLoggedIn$ | async) === false">
+            <mat-list-item routerLink="register" [routerLinkActive]="['mat-list-active']">Register</mat-list-item>
+            <mat-list-item routerLink="login" [routerLinkActive]="['mat-list-active']">Login</mat-list-item>
+          </ng-container>
+          <mat-list-item routerLink="user-list" [routerLinkActive]="['mat-list-active']">User list</mat-list-item>
+          <ng-container *ngIf="authService.isLoggedIn$ | async">
+            <mat-list-item (click)="showSubmenu = !showSubmenu" >
+              <span>User menu</span>
+              <span class="spacer"></span>
+              <button mat-button mat-icon-button >
+                <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu}">expand_more</mat-icon>
+              </button>
+            </mat-list-item>
+            <div class="submenu" [ngClass]="{'expanded' : showSubmenu}">
+              <mat-list-item routerLink="user/user-info" [routerLinkActive]="['mat-list-active']">Info</mat-list-item>
+              <mat-list-item routerLink="user/friends" [routerLinkActive]="['mat-list-active']">Friends</mat-list-item>
+              <mat-list-item [routerLinkActive]="['mat-list-active']">Chat</mat-list-item>
+            </div>
+          </ng-container>
           <mat-divider></mat-divider>
         </ng-container>
-
       </mat-list>
     </mat-sidenav>
 
