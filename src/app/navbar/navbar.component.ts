@@ -13,7 +13,7 @@ export class NavbarComponent implements OnInit {
   @HostBinding('style.top') topPosition;
   value = '';
   constructor(
-    private sidebarService: SidebarService,
+    public sidebarService: SidebarService,
     public authService: AuthService,
     private platform: Platform,
     private router: Router

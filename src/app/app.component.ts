@@ -4,6 +4,8 @@ import {Router} from '@angular/router';
 import {Platform} from '@ionic/angular';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { Storage } from '@capacitor/storage';
+import { MatIconRegistry } from '@angular/material/icon';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,9 @@ export class AppComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private platform: Platform,
-    private zone: NgZone
+    private zone: NgZone,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
   ) {
     this.initializeApp();
   }
@@ -42,6 +46,12 @@ export class AppComponent implements OnInit {
   }
 
   initializeApp() {
+
+    this.matIconRegistry.addSvgIcon(
+      'github',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/icon/github-logo.svg')
+    );
+
     App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
       this.zone.run(() => {
         this.userService.isAppUrlOpen = true;
