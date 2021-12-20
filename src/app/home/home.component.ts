@@ -11,7 +11,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.features = [
-      { title: 'Build work on android, ios', done: true },
+      { title: 'Responsive', done: true },
+      { title: 'Multi platform: web, android app, ios app', done: true},
       { title: 'Change theme color', done: true },
       { title: 'Register new user', done: true },
       { title: 'Login use social account: Facebook, Google, Github', done: true },

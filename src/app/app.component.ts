@@ -51,6 +51,10 @@ export class AppComponent implements OnInit {
       'github',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/icon/github-logo.svg')
     );
+    this.matIconRegistry.addSvgIcon(
+      'skype',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/icon/skype.svg')
+    );
 
     App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
       this.zone.run(() => {
