@@ -16,9 +16,7 @@ export class HomeComponent implements OnInit {
       { title: 'Change theme color', done: true },
       { title: 'Register new user', done: true },
       { title: 'Login use social account: Facebook, Google, Github', done: true },
-      { title: 'User list: auto update if new user create somewhere', done: true },
-      { title: 'Add friend (soon)', done: false },
-      { title: 'Chat (soon)', done: false }
+      { title: 'User list: auto update if new user create somewhere', done: true }
     ];
   }
 
