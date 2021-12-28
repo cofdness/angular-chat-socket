@@ -3,8 +3,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import { map } from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {User} from '../user/user';
-import { Apollo, gql } from 'apollo-angular';
-import {Router} from '@angular/router';
+import { Apollo } from 'apollo-angular';
 import { Storage } from '@capacitor/storage';
 import {mutationGraphql} from '../graphql/mutation.graphql';
 
@@ -12,16 +11,13 @@ import {mutationGraphql} from '../graphql/mutation.graphql';
   providedIn: 'root'
 })
 export class AuthService {
-  // user: User | null;
   isLoggedIn$: BehaviorSubject<boolean>;
   user$: BehaviorSubject<User>;
-  // isLoggedIn = false;
   redirectUrl: string | null = null;
   httpError: HttpErrorResponse | undefined;
 
   constructor(
-    private apollo: Apollo,
-    private router: Router
+    private apollo: Apollo
   ) {
     this.isLoggedIn$ = new BehaviorSubject<boolean>(false);
     this.user$ = new BehaviorSubject<User>(null);

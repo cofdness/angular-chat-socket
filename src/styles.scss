@@ -37,11 +37,14 @@
   //  background-color: mat.get-color-from-palette($accent-palette, 700);
   //}
   .mat-list-active {
-    background-color: mat.get-color-from-palette($accent-palette, 200);
+    background-color: mat.get-color-from-palette($accent-palette, 400);
   }
   .footer {
     background-color: mat.get-color-from-palette($primary-palette);
     color: white;
+  }
+  .mat-raised-button:hover {
+    background-color: mat.get-color-from-palette($accent-palette, 800);
   }
 }
 

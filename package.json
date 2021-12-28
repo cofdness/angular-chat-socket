@@ -36,6 +36,7 @@
     "@capacitor/storage": "^1.2.3",
     "@ionic-native/http": "^5.36.0",
     "@ionic/angular": "^5.9.1",
+    "@ngrx/store": "^13.0.2",
     "apollo-angular": "^2.6.0",
     "firebase": "^9.5.0",
     "graphql": "^16.0.1",
@@ -79,7 +80,8 @@
     "karma-jasmine-html-reporter": "^1.7.0",
     "protractor": "^7.0.0",
     "ts-node": "^10.4.0",
-    "typescript": "^4.5.2"
+    "typescript": "^4.5.2",
+    "eslint-plugin-ngrx": "^2.0.0"
   },
   "description": "Angular app with graphql query and nodejs server"
 }
