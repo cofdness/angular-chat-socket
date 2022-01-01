@@ -13,4 +13,5 @@ export const collectionReducer = createReducer(
     }
     return [...state, bookId];
   })
-)
+);
+

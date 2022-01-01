@@ -1,14 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
 @use '@angular/material' as mat;
 @use 'sass:map';
+
+//import component themes
+@use "app/footer/footer-theme" as footer;
+
 @import '~@angular/material/theming';
 @include mat.core();
-@import "./themes/cyan-teal";
-@import "./themes/purple-teal";
-@import "./themes/indigo-pink";
-@import "./themes/pink-bluegrey";
-@import "./themes/deeppurple-amber";
-@import "./themes/purple-green";
+//@import "./themes/cyan-teal";
+//@import "./themes/purple-teal";
+//@import "./themes/indigo-pink";
+//@import "./themes/pink-bluegrey";
+//@import "./themes/deeppurple-amber";
+//@import "./themes/purple-green";
+
+@import './themes/_var';
+
+//@include angular-material-typography($dynamic-typography);
 
 @mixin all-theme-and-custom-component($theme) {
   $_background: map.get($theme, background);
@@ -21,11 +29,14 @@
   $warn-palette:    map.get($color-config, 'warn');
   $is-dark-theme:   map.get($color-config, 'is-dark');
 
+
   @include mat.all-component-themes($theme);
 
   /*
-   * additional custom component themes here
+   * custom component themes here
    */
+  @include footer.theme($theme);
+
   //body {
   //  background-color: $app-background-color;
   //}.mat-list-item-content{
@@ -39,36 +50,62 @@
   .mat-list-active {
     background-color: mat.get-color-from-palette($accent-palette, 400);
   }
-  .footer {
-    background-color: mat.get-color-from-palette($primary-palette);
-    color: white;
-  }
+  //.footer {
+  //  background-color: mat.get-color-from-palette($primary-palette);
+  //  color: white;
+  //}
   .mat-raised-button:hover {
     background-color: mat.get-color-from-palette($accent-palette, 800);
   }
 }
 
-.deeppurple-amber {
-  @include all-theme-and-custom-component($deeppurple-amber);
+
+$dynamic-app-light-theme: mat.define-light-theme((
+  color: (
+    primary: mat.define-palette($dynamic-theme-primary),
+    accent: mat.define-palette($dynamic-theme-accent),
+    warn: mat.define-palette(mat.$red-palette)
+  )
+));
+$dynamic-app-dark-theme: mat.define-dark-theme((
+  color: (
+    primary: mat.define-palette($dynamic-theme-primary),
+    accent: mat.define-palette($dynamic-theme-accent),
+    warn: mat.define-palette(mat.$red-palette)
+  )
+));
+
+.dark-theme {
+  @include all-theme-and-custom-component($dynamic-app-dark-theme);
+  //@include footer.theme($dynamic-app-dark-theme);
+}
+.light-theme {
+  @include all-theme-and-custom-component($dynamic-app-light-theme);
+  //@include footer.theme($dynamic-app-light-theme);
 }
 
-.indigo-pink {
-  @include all-theme-and-custom-component($indigo-pink);
-}
-.pink-bluegrey {
-  @include all-theme-and-custom-component($pink-bluegrey);
-}
 
-.purple-green {
-  @include all-theme-and-custom-component($purple-green);
-}
-
-.cyan-teal {
-  @include all-theme-and-custom-component($cyan-teal);
-}
-.purple-teal {
-  @include all-theme-and-custom-component($purple-teal);
-}
+//.deeppurple-amber {
+//  @include all-theme-and-custom-component($deeppurple-amber);
+//}
+//
+//.indigo-pink {
+//  @include all-theme-and-custom-component($indigo-pink);
+//}
+//.pink-bluegrey {
+//  @include all-theme-and-custom-component($pink-bluegrey);
+//}
+//
+//.purple-green {
+//  @include all-theme-and-custom-component($purple-green);
+//}
+//
+//.cyan-teal {
+//  @include all-theme-and-custom-component($cyan-teal);
+//}
+//.purple-teal {
+//  @include all-theme-and-custom-component($purple-teal);
+//}
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -10,7 +10,7 @@ import {MaterialModule} from './material/material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import { ThemeSwitchComponent } from './theme-switch/theme-switch.component';
+import { ThemeSwitchComponent } from './theme/theme-switch/theme-switch.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { GraphQLModule} from './graphql/graphql.module';
@@ -25,6 +25,7 @@ import { StoreModule } from '@ngrx/store';
 import {BookModule} from "./book/book.module";
 import {booksReducer} from "./book/books.reducer";
 import {collectionReducer} from "./book/collection.reducer";
+import {themeReducer} from "./theme/theme.reducer";
 
 @NgModule({
   declarations: [
@@ -53,7 +54,7 @@ import {collectionReducer} from "./book/collection.reducer";
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    StoreModule.forRoot({ books: booksReducer, collection: collectionReducer}, {}),
+    StoreModule.forRoot({ books: booksReducer, collection: collectionReducer, theme: themeReducer}, {}),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
