@@ -4,15 +4,10 @@
 
 //import component themes
 @use "app/footer/footer-theme" as footer;
+@use "app/theme/theme-switch/theme-switch-theme" as themeSwitch;
 
 @import '~@angular/material/theming';
 @include mat.core();
-//@import "./themes/cyan-teal";
-//@import "./themes/purple-teal";
-//@import "./themes/indigo-pink";
-//@import "./themes/pink-bluegrey";
-//@import "./themes/deeppurple-amber";
-//@import "./themes/purple-green";
 
 @import './themes/_var';
 
@@ -22,7 +17,7 @@
   $_background: map.get($theme, background);
   $app-background-color: map.get($_background, background);
   $_foreground: map.get($theme, foreground);
-  $app-foreground-color: map.get($_foreground, foreground);
+  $app-foreground-color: map.get($_foreground, text);
   $color-config: mat.get-color-config($theme);
   $primary-palette: map.get($color-config, 'primary');
   $accent-palette:  map.get($color-config, 'accent');
@@ -36,6 +31,7 @@
    * custom component themes here
    */
   @include footer.theme($theme);
+  @include themeSwitch.theme($theme);
 
   //body {
   //  background-color: $app-background-color;
@@ -77,35 +73,10 @@ $dynamic-app-dark-theme: mat.define-dark-theme((
 
 .dark-theme {
   @include all-theme-and-custom-component($dynamic-app-dark-theme);
-  //@include footer.theme($dynamic-app-dark-theme);
 }
 .light-theme {
   @include all-theme-and-custom-component($dynamic-app-light-theme);
-  //@include footer.theme($dynamic-app-light-theme);
 }
-
-
-//.deeppurple-amber {
-//  @include all-theme-and-custom-component($deeppurple-amber);
-//}
-//
-//.indigo-pink {
-//  @include all-theme-and-custom-component($indigo-pink);
-//}
-//.pink-bluegrey {
-//  @include all-theme-and-custom-component($pink-bluegrey);
-//}
-//
-//.purple-green {
-//  @include all-theme-and-custom-component($purple-green);
-//}
-//
-//.cyan-teal {
-//  @include all-theme-and-custom-component($cyan-teal);
-//}
-//.purple-teal {
-//  @include all-theme-and-custom-component($purple-teal);
-//}
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -132,18 +103,3 @@ div.mat-list-item-content {
 .spacer {
   flex: 1 1 auto;
 }
-
-//.mat-list-base {
-//  padding-top: 0 !important;
-//}
-//iframe {
-//  width: 0 !important;
-//  height: 0 !important;
-//}
-
-//@import "material-fallback";
-//.white-space-wrap {
-//  white-space: unset !important;
-//}
-
-//html, body { height: 100% }

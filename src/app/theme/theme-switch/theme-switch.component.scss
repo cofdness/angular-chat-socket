@@ -11,3 +11,34 @@
   width: 64px;
   height: 32px;
 }
+.mat-chip {
+  width: 64px;
+  height: 32px;
+  //margin: 4px;
+  //border-radius: 8px;
+}
+.mat-chip:hover {
+  cursor: pointer;
+}
+
+.mat-divider {
+  margin-top: 16px;
+}
+::ng-deep {
+  .menu {
+    width: 320px;
+    height: 480px;
+    border-radius: 16px !important;
+    .mat-menu-content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+      justify-content: center;
+      &:not(:empty) {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+}

@@ -1,10 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-
-import {ThemeOption} from '../theme-option';
-import {ThemeService} from '../theme.service';
-import { Storage } from '@capacitor/storage';
-import { Theme } from '../theme.model';
-import {isTheme, Mode} from '../theme.model';
+import {Storage} from '@capacitor/storage';
+import {isTheme, Mode, Theme} from '../theme.model';
 import {Store} from '@ngrx/store';
 import {selectTheme} from '../theme.selector';
 import {changeTheme} from '../theme.action';
@@ -16,35 +12,19 @@ import {changeTheme} from '../theme.action';
 })
 export class ThemeSwitchComponent implements OnInit {
 
-  primaryColors: string[] = ['#673ab7', '#3f51b5', '#e91e63', '#9c27b0', '#00ffff', '#800080'];
+  primaryColors: string[] = ['purple', '#673AB7', '#009688', '#2196F3', 'indigo' , 'teal', 'orange'];
   accentColors: string[] = ['#ffc107', '#ff4081', '#607d8b', '#4caf50', '#008080', ];
+  themeModes = [Mode.light, Mode.dark];
   primaryColor = this.primaryColors[0];
   accentColor = this.accentColors[0];
   themeMode: Mode;
   theme$ = this.store.select(selectTheme);
-  // activeTheme!: ThemeOption;
   constructor(
     private store: Store
-    // public themeService: ThemeService,
-  ) {
-    // this.themeService.getThemeOptions().subscribe((themeOptions) => {
-    //   this.activeTheme = this.themeService.themeOptions[0];
-    //   Storage.get({key: 'theme'}).then(theme => {
-    //     if (theme.value) {
-    //       for (const themeOption of themeOptions) {
-    //         if (theme.value === themeOption.value) {
-    //           this.activeTheme = themeOption;
-    //           break;
-    //         }
-    //       }
-    //     }
-    //     this.themeService.setTheme(this.activeTheme);
-    //   });
-    // });
-  }
+  ) {}
 
   async ngOnInit(): Promise<void> {
-    Storage.remove({ key: 'themeObject'}).then();
+    // Storage.remove({ key: 'themeObject'}).then();
       const {value} = await Storage.get({ key: 'themeObject'});
       if (value) {
         const theme = JSON.parse(value);
@@ -67,12 +47,19 @@ export class ThemeSwitchComponent implements OnInit {
   }
 
   setTheme(theme: Theme) {
-    Storage.set({
-      key: 'themeObject',
-      value: JSON.stringify(theme)
-    }).then(() => {
-      this.store.dispatch(changeTheme(theme));
-    });
+    this.store.dispatch(changeTheme(theme));
+  }
+
+  onSelectPrimary(color: string) {
+    this.setTheme({primary: color, accent: null, mode: null});
+  }
+
+  onSelectAccent(color: string) {
+    this.setTheme({primary: null, accent: color, mode: null});
+  }
+
+  onSelectMode(mode: Mode) {
+    this.setTheme({primary: null, accent: null, mode});
   }
 }
 

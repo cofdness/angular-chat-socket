@@ -2,28 +2,25 @@ import {createReducer, on} from '@ngrx/store';
 import { changeTheme } from './theme.action';
 import tinycolor from 'tinycolor2';
 import {Color, ColorType, Mode, Theme} from './theme.model';
+import {Storage} from '@capacitor/storage';
 
 export const initialState = {
-  primary: undefined,
-  accent: undefined,
-  mode: undefined
+  primary: 'purple',
+  accent: '#ffc107',
+  mode: Mode.dark
 };
 
 export const themeReducer = createReducer(
   initialState,
   on(changeTheme, (state: Theme, { primary, accent, mode }) => {
-    const theme = {
-      primary: undefined,
-      accent: undefined,
-      mode: undefined
-    };
+    let theme;
     if (primary) {
       saveColor(primary, ColorType.primary);
-      theme.primary = primary;
+      theme = {...state, primary};
     }
     if (accent) {
       saveColor(accent, ColorType.accent);
-      theme.accent = accent;
+      theme = {...state, accent};
     }
     if (mode) {
       if (mode === Mode.light) {
@@ -33,8 +30,11 @@ export const themeReducer = createReducer(
         document.documentElement.classList.remove('light-theme');
         document.documentElement.classList.add('dark-theme');
       }
-      theme.mode = mode;
+      theme = {...state, mode};
     }
+    Storage.set({
+      key: 'themeObject',
+      value: JSON.stringify(theme)}).then();
     return theme;
   })
 );

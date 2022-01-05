@@ -2,15 +2,37 @@
   <mat-icon>format_color_fill</mat-icon>
 </button>
 
-<mat-menu #menu="matMenu">
-  <div fxLayout="column">
-    <p>Primary</p>
-    <div fxLayout="row">
-      <mat-chip *ngFor="let color of primaryColors" [style.background-color]="color">
-        <button><mat-icon color="accent">sticker</mat-icon></button>
-      </mat-chip>
+<mat-menu #menu="matMenu" class="menu">
+    <div fxFlex="1 1 auto" fxLayout="row" fxLayoutAlign="center center" class="mat-menu-top">
+      <h3 style="">Theming</h3>
     </div>
-  </div>
+    <div fxFlex="1 1 auto" fxLayout="row">
+      <div fxFlex="10"></div>
+      <div fxFlex fxLayout="column">
+        <p>Primary</p>
+        <mat-chip-list aria-label="Primary color selection">
+          <mat-chip *ngFor="let color of primaryColors" [style.background-color]="color" (click)="onSelectPrimary(color)"></mat-chip>
+        </mat-chip-list>
+        <mat-divider>
+        </mat-divider>
+        <p>Accent</p>
+        <mat-chip-list aria-label="Accent color selection">
+          <mat-chip *ngFor="let color of accentColors" [style.background-color]="color" (click)="onSelectAccent(color)"></mat-chip>
+        </mat-chip-list>
+        <mat-divider>
+        </mat-divider>
+        <p>Mode</p>
+        <mat-chip-list aria-label="Accent color selection">
+          <mat-chip style="background-color: whitesmoke" (click)="onSelectMode(themeModes[0])"></mat-chip>
+          <mat-chip style="background-color: black" (click)="onSelectMode(themeModes[1])"></mat-chip>
+        </mat-chip-list>
+      </div>
+      <div fxFlex="10"></div>
+    </div>
+<!--    <div fxFlex="1 1 auto" class="mat-menu-bottom">-->
+
+<!--    </div>-->
+
 <!--  <button-->
 <!--    *ngFor="let option of themeService.themeOptions"-->
 <!--    mat-menu-item-->

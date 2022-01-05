@@ -1,5 +1,5 @@
 <div fxLayout="column">
-  <h3 fx>Books</h3>
+  <h3>Books</h3>
   <app-book-list [books]="books$ | async" (add)="onAddBook($event)"></app-book-list>
   <h3>Collections</h3>
   <app-book-collection [books]="bookCollection$ | async" (remove)="onRemoveBook($event)"></app-book-collection>
