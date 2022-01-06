@@ -33,6 +33,7 @@ export class UserListComponent implements OnInit {
         }
         return {
           ...prev,
+          // @ts-ignore
           users: [subscriptionData.data.newUserEvent, ...prev.users]
         };
       }

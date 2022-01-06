@@ -22,10 +22,10 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {FooterComponent} from './footer/footer.component';
 import {StickyHeaderComponent} from './sticky-header.component';
 import { StoreModule } from '@ngrx/store';
-import {BookModule} from "./book/book.module";
-import {booksReducer} from "./book/books.reducer";
-import {collectionReducer} from "./book/collection.reducer";
-import {themeReducer} from "./theme/theme.reducer";
+import {BookModule} from './book/book.module';
+import {booksReducer} from './book/books.reducer';
+import {collectionReducer} from './book/collection.reducer';
+import {themeReducer} from './theme/theme.reducer';
 
 @NgModule({
   declarations: [
