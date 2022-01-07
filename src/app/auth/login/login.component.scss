@@ -41,3 +41,27 @@
   background-color: #6e5494;
   color: white;
 }
+
+.form-width {
+  width: 320px;
+}
+.form-size {
+  width: 320px;
+  height: 174px;
+}
+
+.hl {
+  border: 2px solid #ddd;
+  width: 320px;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  height: 2px;
+  text-align: center;
+}
+
+.hl-innertext {
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  padding: 8px 10px;
+}

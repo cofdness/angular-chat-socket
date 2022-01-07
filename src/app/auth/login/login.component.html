@@ -22,20 +22,21 @@
       <button mat-raised-button type="submit" color="primary" [disabled]="!loginFormGroup.valid">Login</button>
     </form>
   </mat-card>
-  <mat-divider></mat-divider>
+  <div class="hl">
+    <span class="hl-innertext">or</span>
+  </div>
   <mat-card class="mat-elevation-z7">
-    <div class="form-common service-button">
-      <a mat-raised-button class="facebook-button" [href]="getServerUri('facebook')">
+    <div fxLayout="column" fxLayoutAlign="space-around center" class="form-size">
+      <a class="form-width" color="accent" mat-raised-button [href]="getServerUri('facebook')">
+        <mat-icon fxFlex="30" fxFlexAlign="center" svgIcon="facebook"></mat-icon>
         <span>Login use Facebook</span>
       </a>
-    </div>
-    <div class="form-common service-button">
-      <a mat-raised-button class="google-button" [href]="getServerUri('google')">
+      <a class="form-width" color="accent" mat-raised-button [href]="getServerUri('google')">
+        <mat-icon fxFlex="30" fxFlexAlign="center" svgIcon="google"></mat-icon>
         <span>Login use Google</span>
       </a>
-    </div>
-    <div class="form-common service-button">
-      <a mat-raised-button class="github-button" [href]="getServerUri('github')">
+      <a class="form-width" color="accent" mat-raised-button [href]="getServerUri('github')">
+        <mat-icon fxFlex="30" fxFlexAlign="center" svgIcon="github"></mat-icon>
         <span>Login use Github</span>
       </a>
     </div>

@@ -55,6 +55,14 @@ export class AppComponent implements OnInit {
       'skype',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/icon/skype.svg')
     );
+    this.matIconRegistry.addSvgIcon(
+      'google',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/icon/google-logo.svg')
+    );
+    this.matIconRegistry.addSvgIcon(
+      'facebook',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/icon/facebook-icon.svg')
+    );
 
     App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
       this.zone.run(() => {
