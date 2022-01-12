@@ -2,6 +2,9 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { UserListComponent } from './user-list.component';
+import {Apollo} from "apollo-angular";
+import {GraphQLModule} from "../graphql/graphql.module";
+import {HttpClientModule} from "@angular/common/http";
 
 describe('UserListComponent', () => {
   let component: UserListComponent;
@@ -10,7 +13,8 @@ describe('UserListComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ UserListComponent ],
-      imports: [IonicModule.forRoot()]
+      providers: [Apollo],
+      imports: [HttpClientModule, GraphQLModule, IonicModule.forRoot()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(UserListComponent);

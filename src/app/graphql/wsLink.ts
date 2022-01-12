@@ -18,20 +18,19 @@ export class WebSocketLink extends ApolloLink {
           next: sink.next.bind(sink),
           complete: sink.complete.bind(sink),
           error: (err) => {
-            if (err instanceof Error) {
-              return sink.error(err);
-            }
-
             if (err instanceof CloseEvent) {
               return sink.error(
                 // reason will be available on clean closes
                 new Error(`Socket closed with event ${err.code} ${err.reason || ''}`),
               );
             }
-
-            return sink.error(
-              new Error((err as GraphQLError[]).map(({ message }) => message).join(', ')),
-            );
+            if (err instanceof Array) {
+              return sink.error(
+                new Error((err as GraphQLError[]).map(({ message }) => message).join(', ')),
+              );
+            }
+            // err instanceof Error
+            return sink.error(err);
           },
         },
       );

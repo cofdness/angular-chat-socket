@@ -2,13 +2,17 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
+import {Apollo} from 'apollo-angular';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('AppComponent', () => {
 
   beforeEach(waitForAsync(() => {
 
     TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
       declarations: [AppComponent],
+      providers: [Apollo],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   }));

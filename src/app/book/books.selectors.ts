@@ -8,5 +8,11 @@ export const selectCollectionState =  (state: BookState) => state.collection;
 export const selectBookCollection = createSelector(
   selectBooks,
   selectCollectionState,
-  (books, collection) => collection.map(id => books.find((book) => book.id === id))
+  (books, collection) => {
+    if (collection instanceof Array){
+      collection.map(id => books.find((book) => book.id === id));
+    } else {
+      return collection;
+    }
+  }
 );

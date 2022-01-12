@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ThemeSwitchComponent } from './theme-switch.component';
+import {provideMockStore} from '@ngrx/store/testing';
+import {MatMenuModule} from '@angular/material/menu';
 
 describe('ThemeSwitchComponent', () => {
   let component: ThemeSwitchComponent;
@@ -8,6 +10,8 @@ describe('ThemeSwitchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [MatMenuModule],
+      providers: [provideMockStore({})],
       declarations: [ ThemeSwitchComponent ]
     })
     .compileComponents();

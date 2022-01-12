@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Apollo, QueryRef} from 'apollo-angular';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {UserCompact} from '../user/user';
+import {Observable} from 'rxjs';
 import {queryGraphql} from '../graphql/query.graphql';
 import {subscriptionGraphql} from '../graphql/subscription.graphql';
 

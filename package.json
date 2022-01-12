@@ -1,7 +1,10 @@
 {
   "name": "Angular-chat-socket",
   "version": "0.2.0",
-  "author": "Vu Tran Kim Phung",
+  "author": {
+    "name":"Vu Tran Kim Phung",
+    "email": "vtkp2002dn@gmail.com"
+  },
   "homepage": "https://localhost:4200",
   "scripts": {
     "ng": "ng",
