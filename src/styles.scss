@@ -5,6 +5,7 @@
 //import component themes
 @use "app/footer/footer-theme" as footer;
 @use "app/theme/theme-switch/theme-switch-theme" as themeSwitch;
+@use "app/navbar/navbar-theme" as navbar;
 
 @import '~@angular/material/theming';
 @include mat.core();
@@ -32,6 +33,7 @@
    */
   @include footer.theme($theme);
   @include themeSwitch.theme($theme);
+  @include navbar.theme($theme);
 
   //body {
   //  background-color: $app-background-color;
