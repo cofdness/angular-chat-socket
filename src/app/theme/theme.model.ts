@@ -1,8 +1,8 @@
 
 export interface Theme {
-  primary: string;
-  accent: string;
-  mode: Mode;
+  primary: string | null;
+  accent: string | null;
+  mode: Mode | null;
 }
 
 export enum Mode {

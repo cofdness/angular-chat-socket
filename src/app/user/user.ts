@@ -4,7 +4,7 @@ export interface User {
   email: string;
   picture: string;
   accessToken?: Token;
-  friends: UserCompact[];
+  friends?: UserCompact[];
 }
 export interface Token {
   token: string;

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+
 
 import { RegisterComponent } from './register.component';
 import {Apollo} from "apollo-angular";
@@ -13,7 +13,7 @@ describe('RegisterComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ RegisterComponent ],
       providers: [Apollo],
-      imports: [RouterTestingModule, IonicModule.forRoot()]
+      imports: [RouterTestingModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(RegisterComponent);

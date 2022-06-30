@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
 
 import { UserListComponent } from './user-list.component';
 import {Apollo} from "apollo-angular";
@@ -14,7 +13,7 @@ describe('UserListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UserListComponent ],
       providers: [Apollo],
-      imports: [HttpClientModule, GraphQLModule, IonicModule.forRoot()]
+      imports: [HttpClientModule, GraphQLModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(UserListComponent);

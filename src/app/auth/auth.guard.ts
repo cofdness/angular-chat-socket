@@ -35,7 +35,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     return this.checkLogin(url);
   }
 
-  checkLogin(url): boolean | UrlTree {
+  checkLogin(url: string): boolean | UrlTree {
     if (this.authService.isLoggedIn$.getValue()) {
       return true;
     }

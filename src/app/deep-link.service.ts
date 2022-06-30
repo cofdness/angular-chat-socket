@@ -9,11 +9,10 @@ export class DeepLinkService {
   constructor() { }
 
   deeplink(params: any){
-    let stringParams: string;
+    let stringParams = '';
     if (typeof params === 'object') {
       stringParams = Object.keys(params).map(k => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`).join('&');
     }
-    console.log(stringParams);
     window.location.href = `${environment.deepLinkUri}/login?${stringParams}`;
   }
 }

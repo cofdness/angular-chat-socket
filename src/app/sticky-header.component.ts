@@ -6,7 +6,7 @@ import {
   trigger
 } from '@angular/animations';
 import {AfterViewInit, ApplicationRef, Component, HostBinding} from '@angular/core';
-import { fromEvent } from 'rxjs';
+import {fromEvent, OperatorFunction} from 'rxjs';
 import {
   distinctUntilChanged,
   filter,
@@ -73,7 +73,7 @@ export class StickyHeaderComponent implements AfterViewInit {
     // const scroll$ = fromEvent(window, 'scroll').pipe(
     const scroll$ = this.scrollDispatcher.scrolled()
       .pipe(
-      throttleTime(10),
+      throttleTime(10) as OperatorFunction<void | CdkScrollable, CdkScrollable>,
       map((scrollable: CdkScrollable) => scrollable.measureScrollOffset('top')),
       pairwise(),
       map(([y1, y2]): Direction => (y2 < y1 ? Direction.Up : Direction.Down)),

@@ -1,6 +1,5 @@
-import {Component, HostBinding, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SidebarService} from '../sidebar.service';
-import {Platform} from '@angular/cdk/platform';
 import {AuthService} from '../auth/auth.service';
 import {Router} from '@angular/router';
 
@@ -10,23 +9,15 @@ import {Router} from '@angular/router';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  @HostBinding('style.top') topPosition;
   value = '';
   constructor(
     public sidebarService: SidebarService,
     public authService: AuthService,
-    private platform: Platform,
     private router: Router
   ) {
   }
 
   ngOnInit(): void {
-    // if (this.platform.IOS) {
-    //   this.topPosition = '16px';
-    // } else {
-    //   this.topPosition = 0;
-    // }
-    this.topPosition = 0;
   }
 
   sidebarToggle() {
@@ -34,12 +25,11 @@ export class NavbarComponent implements OnInit {
   }
 
   logout(){
-    this.authService.logout().then(() => {
-      this.router.navigate(['login']).then(() => {
+    this.authService.logout()
+    this.router.navigate(['login']).then(() => {
         // refresh after log out
         window.location.reload();
-        }
-      );
-    });
+      }
+    );
   }
 }

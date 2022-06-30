@@ -1,12 +1,12 @@
-# Angular IONIC multiplatform
+# Important update
 
-This project implement login social support IOS, Android, Web.
+This project will stop build multiplatform. I will create a flutter version to cover the IOS and Android build.
 
 ## Requirement
-- Nodejs
+- Nodejs (move to server project)
 - angular CLI
-- Ionic CLI
-- MongoDB
+- Ionic CLI (deprecated)
+- MongoDB (move to server project)
 - Other package and dependence
 
 ## How to run
@@ -21,13 +21,13 @@ This server user angular on frontend and nodejs on backend.
 ### Development
 - Frontend: `npm start`
 - Backend: on server folder `npm start`
-- IOS: `ionic capacitor run ios`
-- Android: `ionic capacitor run android`
+- IOS: `ionic capacitor run ios` (deprecated)
+- Android: `ionic capacitor run android` (deprecated)
 ### Sync android and ios app
-- `ionic capacitor sync`
+- `ionic capacitor sync` (deprecated)
 
 ### Build
-- Take a look at ionic doc for build android and ios
+- Take a look at ionic doc for build android and ios (deprecated)
 - web build: `ng build`
 
 ## Demo
