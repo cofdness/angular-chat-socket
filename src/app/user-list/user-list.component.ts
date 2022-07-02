@@ -1,11 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Apollo, QueryRef} from 'apollo-angular';
-import {catchError, Observable, of} from 'rxjs';
 import {queryGraphql} from '../graphql/query.graphql';
 import {subscriptionGraphql} from '../graphql/subscription.graphql';
 import {ApolloQueryResult, NetworkStatus} from "@apollo/client";
-import {UserQuery} from "../model/user-query.model";
-import {map} from "rxjs/operators";
+import {UsersQuery} from "../model/user-query.model";
 
 @Component({
   selector: 'app-user-list',
@@ -28,10 +26,10 @@ export class UserListComponent implements OnInit {
   }
 
   // fetch user list, live update if new user create.
-  usersQuery: QueryRef<UserQuery>
-  users:  ApolloQueryResult<UserQuery> = this.emptyUser;
+  usersQuery: QueryRef<UsersQuery>
+  users:  ApolloQueryResult<UsersQuery> = this.emptyUser;
   constructor(private apollo: Apollo) {
-    this.usersQuery = apollo.watchQuery<UserQuery>({
+    this.usersQuery = apollo.watchQuery<UsersQuery>({
       query: queryGraphql.users
     })
     this.usersQuery.valueChanges.subscribe({

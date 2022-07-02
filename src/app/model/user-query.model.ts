@@ -1,5 +1,5 @@
 import {User} from "../user/user";
 
-export interface UserQuery {
+export interface UsersQuery {
   users: Array<User>;
 }
