@@ -7,7 +7,7 @@ import {Book} from '../book.model';
   styleUrls: ['./book-list.component.scss'],
 })
 export class BookListComponent implements OnInit {
-  @Input() books: ReadonlyArray<Book> = [];
+  @Input() books!: ReadonlyArray<Book> | null
   @Output() add = new EventEmitter<string>();
 
   constructor() { }

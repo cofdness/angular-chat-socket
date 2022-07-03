@@ -19,6 +19,9 @@ import {StoreModule} from "@ngrx/store";
 import {themeReducer} from "./theme/theme.reducer";
 import {FooterComponent} from "./footer/footer.component";
 import {UserListComponent} from "./user-list/user-list.component";
+import {HomeComponent} from "./home/home.component";
+import {booksReducer} from "./book/books.reducer";
+import {collectionReducer} from "./book/collection.reducer";
 
 @NgModule({
   declarations: [
@@ -30,6 +33,7 @@ import {UserListComponent} from "./user-list/user-list.component";
     RegisterComponent,
     LoginComponent,
     UserListComponent,
+    HomeComponent,
     AppComponent
   ],
   imports: [
@@ -41,7 +45,7 @@ import {UserListComponent} from "./user-list/user-list.component";
     FlexLayoutModule,
     ReactiveFormsModule,
     HttpClientModule,
-    StoreModule.forRoot({them: themeReducer})
+    StoreModule.forRoot({them: themeReducer, books: booksReducer, collection: collectionReducer})
   ],
   providers: [],
   bootstrap: [AppComponent]

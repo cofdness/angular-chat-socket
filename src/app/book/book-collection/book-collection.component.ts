@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+
 import {Book} from "../book.model";
 
 @Component({
@@ -8,10 +9,13 @@ import {Book} from "../book.model";
 })
 export class BookCollectionComponent implements OnInit {
 
-  @Input() books: ReadonlyArray<Book> = [];
+  @Input() books!: ReadonlyArray<Book> | null;
   @Output() remove = new EventEmitter<string>();
-  constructor() { }
 
-  ngOnInit() {}
+  constructor() {
+  }
+
+  ngOnInit() {
+  }
 
 }

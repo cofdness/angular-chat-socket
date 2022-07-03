@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {GoogleBooksService} from '../book.service';
 import {Store} from '@ngrx/store';
 import {addBook, removeBook, retrieveBookList} from '../books.action';
@@ -17,19 +17,25 @@ export class BooksComponent implements OnInit {
   constructor(
     private bookService: GoogleBooksService,
     private store: Store
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.bookService
       .getBooks()
-      .subscribe(books => this.store.dispatch(retrieveBookList( { books })));
+      .subscribe({
+        next: books => {
+          console.log(books);
+          this.store.dispatch(retrieveBookList({books}))
+        }
+      });
   }
 
   onAddBook(bookId: string) {
-    this.store.dispatch(addBook({ bookId }));
+    this.store.dispatch(addBook({bookId}));
   }
 
   onRemoveBook(bookId: string) {
-    this.store.dispatch(removeBook({ bookId }));
+    this.store.dispatch(removeBook({bookId}));
   }
 }
