@@ -6,13 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  features: any;
+  features!: Array<{title: string, done: boolean}>;
   constructor() { }
 
   ngOnInit() {
     this.features = [
       { title: 'Responsive', done: true },
-      { title: 'Multi platform: web, android app, ios app', done: true},
+      { title: 'Upgrade to angular 14', done: true},
+      { title: 'Android and IOS deprecated and will replace by flutter version', done: false},
       { title: 'Change theme color', done: true },
       { title: 'Register new user', done: true },
       { title: 'Login use social account: Facebook, Google, Github', done: true },
