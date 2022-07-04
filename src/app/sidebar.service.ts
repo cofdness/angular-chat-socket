@@ -10,8 +10,8 @@ export class SidebarService implements OnDestroy{
   mobileQuery: MediaQueryList;
   sidebarOpen = false;
   mobileRes: BehaviorSubject<boolean>;
-  private _marginTop: boolean;
-  private readonly mobileQueryListener: (event) => void;
+  private _marginTop = false;
+  private readonly mobileQueryListener: (event: any) => void;
 
   constructor(
     private appRef: ApplicationRef ,

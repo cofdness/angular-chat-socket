@@ -1,18 +1,17 @@
-import {createSelector} from '@ngrx/store';
-import {BookState} from './book.state';
+import {createFeatureSelector, createSelector} from '@ngrx/store';
+import {Book} from "./book.model";
 
 
-export const selectBooks = (state: BookState) => state.books;
-export const selectCollectionState =  (state: BookState) => state.collection;
+export const selectBooks = createFeatureSelector<ReadonlyArray<Book>>('books');
+export const selectCollectionState =  createFeatureSelector<ReadonlyArray<String>>('collection');
 
 export const selectBookCollection = createSelector(
   selectBooks,
   selectCollectionState,
   (books, collection) => {
-    if (collection instanceof Array){
-      return collection.map(id => books.find((book) => book.id === id));
-    } else {
-      return collection;
+    if (collection instanceof Array) {
+      return collection.map(id => books.find((book) => book.id === id)) as ReadonlyArray<Book>
     }
+    return null;
   }
 );

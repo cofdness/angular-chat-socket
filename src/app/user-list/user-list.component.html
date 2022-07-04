@@ -1,4 +1,4 @@
-<mat-card *ngFor="let user of (users | async)?.data.users" class="name-card">
+<mat-card *ngFor="let user of users.data.users" class="name-card">
   <mat-card-title-group>
     <mat-card-title>{{user.name}}</mat-card-title>
     <img mat-card-image [src]="user.picture" class="name-picture">
@@ -7,3 +7,4 @@
     <button mat-button color="accent">Add friend</button>
   </mat-card-actions>
 </mat-card>
+

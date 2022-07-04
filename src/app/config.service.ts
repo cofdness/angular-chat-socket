@@ -1,13 +1,13 @@
 // host url
-import {environment} from '../environments/environment';
+import { environment } from '../environments/environment';
 export const serverUri = `${environment.apiProtocol}://${environment.serverAddress}`;
 export const socketUri = `${environment.socketProtocol}://${environment.serverAddress}`;
 
-import {WINDOW} from './window.providers';
-import {Inject, Injectable} from '@angular/core';
+import { WINDOW } from './window.providers';
+import { Inject, Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ConfigService {
   hostUrl!: string;

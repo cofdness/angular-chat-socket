@@ -4,7 +4,6 @@ import { map } from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {User} from '../user/user';
 import { Apollo } from 'apollo-angular';
-import { Storage } from '@capacitor/storage';
 import {mutationGraphql} from '../graphql/mutation.graphql';
 
 @Injectable({
@@ -12,7 +11,7 @@ import {mutationGraphql} from '../graphql/mutation.graphql';
 })
 export class AuthService {
   isLoggedIn$: BehaviorSubject<boolean>;
-  user$: BehaviorSubject<User>;
+  user$: BehaviorSubject<User | null>;
   redirectUrl: string | null = null;
   httpError: HttpErrorResponse | undefined;
 
@@ -20,7 +19,7 @@ export class AuthService {
     private apollo: Apollo
   ) {
     this.isLoggedIn$ = new BehaviorSubject<boolean>(false);
-    this.user$ = new BehaviorSubject<User>(null);
+    this.user$ = new BehaviorSubject<User | null>(null);
   }
 
    login(email: string, password: string): Observable<User>{
@@ -34,36 +33,33 @@ export class AuthService {
       // @ts-ignore
       const user = data.login as User;
       this.nextUser$(user);
-      this.setItemToStorage('token', user.accessToken.token).then();
+      this.setItemToStorage('token', user.accessToken!.token);
       this.nextIsLoggedIn$(true);
       return user;
     } ));
   }
 
-  logout(): Promise<void> {
+  logout(): void {
     this.isLoggedIn$.next(false);
     this.nextUser$(null);
-    return this.removeItemFromStorage('token');
+    this.removeItemFromStorage('token');
   }
 
-  setItemToStorage(key, value): Promise<void>{
-    return Storage.set({
-      key,
-      value
-    });
+  setItemToStorage(key: string, value: string): void{
+    localStorage.setItem(key, value);
   }
-  getItemFromStorage(key) {
-    return Storage.get({key});
+  getItemFromStorage(key: string): string | null {
+    return localStorage.getItem(key);
   }
-  removeItemFromStorage(key) {
-    return Storage.remove({key});
+  removeItemFromStorage(key: string): void {
+     localStorage.removeItem(key);
   }
 
   nextIsLoggedIn$(value: boolean) {
     this.isLoggedIn$.next(value);
   }
 
-  nextUser$(user: User) {
+  nextUser$(user: User | null) {
     this.user$.next(user);
   }
 

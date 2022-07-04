@@ -18,20 +18,22 @@ import {Router} from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   registerForm!: FormGroup;
-  newUser: UserInput;
+  newUser: UserInput | null;
 
   constructor(
     private userService: UserService,
     private authService: AuthService,
     private router: Router
-  ) { }
+  ) {
+    this.newUser = null;
+  }
 
   ngOnInit() {
     this.registerForm = new FormGroup({
         email: new FormControl('', [Validators.required, Validators.email]),
         password: new FormControl('', [Validators.required]),
         confirmPassword: new FormControl('',[Validators.required])},
-      [this.passwordConfirming]);
+      );
   }
 
   get email() {
@@ -48,24 +50,23 @@ export class RegisterComponent implements OnInit {
 
   register() {
     this.newUser = {
-      email: this.registerForm.get('email').value as string,
-      password: this.registerForm.get('password').value as string
+      email: this.registerForm.get('email')!.value as string,
+      password: this.registerForm.get('password')!.value as string
     };
     this.userService.createUser(this.newUser).subscribe((user: User) => {
       this.authService.nextUser$(user);
       this.authService.nextIsLoggedIn$(true);
-      this.authService.setItemToStorage('token', user.accessToken.token).then(() => {
-        this.router.navigate(['/user/user-info']).then();
-      });
+      this.authService.setItemToStorage('token', user.accessToken!.token);
+      this.router.navigate(['/user/user-info']).then();
     });
   }
 
-  private passwordConfirming(form: FormGroup): ValidationErrors {
-    if (form.get('password').value !== form.get('confirmPassword').value) {
-      form.get('confirmPassword').setErrors({mismatch: {value: true}});
+  private passwordConfirming(form: FormGroup): ValidationErrors | null {
+    if (form.get('password')!.value !== form.get('confirmPassword')!.value) {
+      form.get('confirmPassword')!.setErrors({mismatch: {value: true}});
       return {mismatch: {value: true}};
     } else {
-      form.get('confirmPassword').clearValidators();
+      form.get('confirmPassword')!.clearValidators();
       return null;
     }
   }

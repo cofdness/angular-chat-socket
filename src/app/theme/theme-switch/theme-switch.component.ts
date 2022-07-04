@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Storage} from '@capacitor/storage';
 import {isTheme, Mode, Theme} from '../theme.model';
 import {Store} from '@ngrx/store';
 import {selectTheme} from '../theme.selector';
 import {changeTheme} from '../theme.action';
+import {Observable} from "rxjs";
+import {ThemeState} from "../theme.state";
 
 @Component({
   selector: 'app-theme-switch',
@@ -18,14 +19,17 @@ export class ThemeSwitchComponent implements OnInit {
   primaryColor = this.primaryColors[0];
   accentColor = this.accentColors[0];
   themeMode: Mode;
-  theme$ = this.store.select(selectTheme);
+  theme$: Observable<Theme>
   constructor(
-    private store: Store
-  ) {}
+    private store: Store<ThemeState>
+  ) {
+    this.themeMode = Mode.light;
+    this.theme$ = this.store.select<Theme>(selectTheme);
+  }
 
   async ngOnInit(): Promise<void> {
     // Storage.remove({ key: 'themeObject'}).then();
-      const {value} = await Storage.get({ key: 'themeObject'});
+      const value = localStorage.getItem('themeObject')
       if (value) {
         const theme = JSON.parse(value);
         if (isTheme(theme)) {

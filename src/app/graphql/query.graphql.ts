@@ -1,4 +1,5 @@
 import {gql} from 'apollo-angular';
+import {User} from "../user/user";
 
 export const queryGraphql = {
   currentUser : gql`
@@ -25,7 +26,7 @@ export const queryGraphql = {
       }
     }
   `,
-  users: gql`
+  users: gql<{users: User}, null>`
     query Users {
         users {
           id

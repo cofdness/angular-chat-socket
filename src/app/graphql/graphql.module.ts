@@ -5,7 +5,6 @@ import {HttpLink} from 'apollo-angular/http';
 import {serverUri, socketUri} from '../config.service';
 import {WebSocketLink} from './wsLink';
 import {getMainDefinition} from '@apollo/client/utilities';
-import { Storage } from '@capacitor/storage';
 import {setContext} from '@apollo/client/link/context';
 import {createHttpLink} from '@apollo/client/core';
 
@@ -23,20 +22,20 @@ export const createApollo = (httpLink: HttpLink): ApolloClientOptions<any> => {
       error: (err) => console.log(err)
     },
     connectionParams: async () => {
-      const token = await Storage.get({key: 'token'});
+      const token = localStorage.getItem('token')
       return {
-        authorization: token.value ? `Bearer ${token}` : null
+        authorization: token ? `Bearer ${token}` : null
       };
     }
   });
-  const authMiddleware = setContext(operation =>
-    Storage.get({key: 'token'}).then(token => ({
-        // Make sure to actually set the headers here
-        headers: {
-          authorization: `Bearer ${token.value}`,
-        }
-      }))
-  );
+  const authMiddleware = setContext(operation => {
+    const token = localStorage.getItem('token');
+    return ({
+      // Make sure to actually set the headers here
+      headers: {
+        authorization: `Bearer ${token}`,
+      }
+    })});
 
   const graphqlLink = authMiddleware.concat(http);
   // using the ability to split links, you can send data to each link

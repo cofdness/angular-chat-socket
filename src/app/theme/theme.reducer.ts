@@ -1,8 +1,7 @@
 import {createReducer, on} from '@ngrx/store';
 import { changeTheme } from './theme.action';
-import tinycolor from 'tinycolor2';
+import * as tinycolor from 'tinycolor2';
 import {Color, ColorType, Mode, Theme} from './theme.model';
-import {Storage} from '@capacitor/storage';
 
 export const initialState = {
   primary: 'purple',
@@ -12,8 +11,8 @@ export const initialState = {
 
 export const themeReducer = createReducer(
   initialState,
-  on(changeTheme, (state: Theme, { primary, accent, mode }) => {
-    let theme;
+  on(changeTheme, (state, { primary, accent, mode }) => {
+    let theme = state;
     if (primary) {
       saveColor(primary, ColorType.primary);
       theme = {...state, primary};
@@ -32,11 +31,10 @@ export const themeReducer = createReducer(
       }
       theme = {...state, mode};
     }
-    Storage.set({
-      key: 'themeObject',
-      value: JSON.stringify(theme)}).then();
+    localStorage.setItem('themeObject', JSON.stringify(theme))
     return theme;
-  })
+  }
+  )
 );
 
 const updateTheme = (colors: Color[], theme: string) => {
@@ -74,7 +72,7 @@ const computeColors = (hex: string): Color[] => [
   getColorObject(tinycolor(hex).lighten(5).saturate(5), 'A700')
 ];
 
-const getColorObject = (value, name): Color => {
+const getColorObject = (value: any, name: string): Color => {
   const c = tinycolor(value);
   return {
     name,
