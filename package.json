@@ -1,12 +1,18 @@
 {
-  "name": "chat-socket-client",
-  "version": "0.0.0",
+  "name": "Angular-chat-socket",
+  "version": "0.2.0",
+  "author": {
+    "name":"Vu Tran Kim Phung",
+    "email": "vtkp2002dn@gmail.com"
+  },
+  "homepage": "https://localhost:4200",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "start": "ng serve --ssl --host 0.0.0.0",
+    "build": "ng build --configuration production --aot --outputHashing=all",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
