@@ -57,6 +57,7 @@ enum Direction {
 })
 export class StickyHeaderComponent implements AfterViewInit {
   private isVisible = true;
+  private stickyY = 0;
 
   constructor(
     private scrollDispatcher: ScrollDispatcher,
@@ -76,7 +77,19 @@ export class StickyHeaderComponent implements AfterViewInit {
       throttleTime(10) as OperatorFunction<void | CdkScrollable, CdkScrollable>,
       map((scrollable: CdkScrollable) => scrollable.measureScrollOffset('top')),
       pairwise(),
-      map(([y1, y2]): Direction => (y2 < y1 ? Direction.Up : Direction.Down)),
+      map(([y1, y2]): Direction => {
+        if (y2 === 0) {
+          return Direction.Up;
+        }
+        if (y2 >= y1) {
+          this.stickyY = y1;
+          return Direction.Down;
+        }
+        if (y2 < y1 && y2 < this.stickyY) {
+          return Direction.Up;
+        }
+        return Direction.Down;
+      }),
       distinctUntilChanged(),
       share()
     );
