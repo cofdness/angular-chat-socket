@@ -46,29 +46,17 @@ export class LoginComponent implements OnInit {
     //   }
     // });
 
-    // this.route.queryParams.subscribe((params) => {
-    //   if (params.access_token) {
-    //     this.authService.logout().then(() => {
-    //       this.authService
-    //         .setItemToStorage('token', params.access_token)
-    //         .then(() => {
-    //           this.userService.getCurrentUser().subscribe((user) => {
-    //             if (
-    //               this.platform.is('mobileweb')
-    //               // || this.platform.is('desktop')
-    //             ) {
-    //               // eslint-disable-next-line @typescript-eslint/naming-convention
-    //               this.deepLinkService.deeplink({
-    //                 access_token: params.access_token,
-    //               });
-    //             } else {
-    //               this.redirectAfterLoginSuccess();
-    //             }
-    //           });
-    //         });
-    //     });
-    //   }
-    // });
+    this.route.queryParams.subscribe((params) => {
+      if (params['access_token']) {
+        this.authService.logout()
+        this.authService.setItemToStorage('token', params['access_token'])
+        this.userService.getCurrentUser().subscribe({
+          next: user => {
+            this.redirectAfterLoginSuccess();
+          }
+        })
+      }
+    });
   }
 
   login(): void {
