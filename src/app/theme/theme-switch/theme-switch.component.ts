@@ -13,7 +13,7 @@ import {ThemeState} from "../theme.state";
 })
 export class ThemeSwitchComponent implements OnInit {
 
-  primaryColors: string[] = ['purple', '#673AB7', '#009688', '#2196F3', 'indigo' , 'teal', 'orange'];
+  primaryColors: string[] = ['#2196F3', 'purple', '#673AB7', '#009688', 'purple', 'indigo' , 'teal', 'orange'];
   accentColors: string[] = ['#ffc107', '#ff4081', '#607d8b', '#4caf50', '#008080', ];
   themeModes = [Mode.light, Mode.dark];
   primaryColor = this.primaryColors[0];

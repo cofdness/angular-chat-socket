@@ -1,0 +1,67 @@
+<div [class.without-options]="hideMoreOptions" class="grid-controls">
+  <!-- COLUMNS -->
+  <app-grid-column-chooser
+    (eventNotes)="applyColumnChooser.emit($event)"
+    (eventNotesReset)="resetColumnChooser.emit()"
+    *ngIf="!hideColumnSelector"
+    [columns]="columns"
+    [disabled]="disableColumnSelector"
+  >
+  </app-grid-column-chooser>
+
+  <!-- FILTER -->
+
+  <button
+    (click)="onClickFilter()"
+    *ngIf="!hideFilterButton"
+    [color]="filterable ? 'primary' : ''"
+    [disabled]="disableFilterButton"
+    [matTooltip]="filterable ? 'Close Filters' : 'Open Filters'"
+    data-qa="dft-filter-button"
+    mat-icon-button
+    matTooltipClass="ipts-tooltip"
+  >
+    <mat-icon>filter_list</mat-icon>
+  </button>
+  <button
+    (click)="onClearFilters()"
+    *ngIf="hasFilters && !myQueues"
+    color="primary"
+    mat-stroked-button
+    matTooltip="Clear Filters"
+    matTooltipClass="ipts-tooltip"
+  >
+    <mat-icon>clear</mat-icon>
+    {{ clearButtonCaption }}
+  </button>
+
+  <!-- MORE -->
+
+  <button
+    #trigger="matMenuTrigger"
+    *ngIf="!hideMoreOptions"
+    [color]="trigger.menuOpen ? 'primary' : ''"
+    [disabled]="disableMoreOptions"
+    [mat-menu-trigger-for]="controlsMenu"
+    mat-icon-button
+    matTooltip="More"
+    matTooltipClass="ipts-tooltip"
+  >
+    <mat-icon class="i-small">more_vert</mat-icon>
+  </button>
+
+  <mat-menu #controlsMenu="matMenu">
+    <ng-container *ngFor="let item of menuItems">
+      <button
+        (click)="menuItemClick.emit(item.action)"
+        [disabled]="item.disabled"
+        color="primary"
+        mat-menu-item
+      >
+        <mat-icon>{{ item.icon }}</mat-icon>
+        <span>{{ item.label }}</span>
+      </button>
+    </ng-container>
+  </mat-menu>
+</div>
+

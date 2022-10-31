@@ -3,6 +3,7 @@
   height: 250px;
   margin: 8px 8px 8px 32px;
 }
+
 :host {
   display: flex;
   flex-direction: row;
@@ -11,9 +12,29 @@
   //height: 50%;
   flex-wrap: wrap;
 }
+
 .name-picture {
-  margin-left: 4px;
-  margin-right: 8px;
   width: 128px;
   height: 128px;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-column-name {
+  text-align: center;
+  font-weight: bold;
+  border-right: 1px solid currentColor;
+}
+
+.mat-column-picture {
+  font-size: 20px;
+  border-right: 1px solid currentColor;
+  text-align: center;
+}
+
+.mat-column-action {
+  text-align: center;
+  font-style: italic;
 }
