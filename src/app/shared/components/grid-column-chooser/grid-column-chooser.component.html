@@ -31,15 +31,12 @@
           [disabled]="column.disabled ? true : false "
           [ngModel]="column.checked"
           color="primary"
-        ></mat-checkbox>
-        <span>
-          {{ column.label }}
-        </span>
+        > {{ column.label }} </mat-checkbox>
       </div>
     </div>
   </div>
   <div class="filter-buttons">
-    <button (click)="onResetSelections()" color="secondary" mat-stroked-button>Reset</button>
+    <button (click)="onResetSelections()" color="accent" mat-stroked-button>Reset</button>
     <button (click)="onApplySelections()" class="ml-24" color="primary" mat-raised-button>
       Apply
     </button>

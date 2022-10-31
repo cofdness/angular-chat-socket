@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Apollo, QueryRef } from 'apollo-angular';
 import { queryGraphql } from '../graphql/query.graphql';
 import { subscriptionGraphql } from '../graphql/subscription.graphql';
@@ -16,6 +22,10 @@ import {
 import { ACTION_MENU } from '../shared/constants/column.constants';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+
+import * as XLSX from 'xlsx';
 
 export const emptyUser = {
   data: {
@@ -36,8 +46,12 @@ export const emptyUser = {
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
   filterEntity!: User;
   filterType = MatTableFilter.ANYWHERE;
   // fetch user list, live update if new user create.
@@ -90,6 +104,11 @@ export class UserListComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
   onFilterClick(): void {
     this.filterable = !this.filterable;
   }
@@ -114,7 +133,18 @@ export class UserListComponent implements OnInit {
       this.onClearFilters();
     }
     if (event === ACTION_MENU.EXPORT_EXCEL) {
-      // export to excel
+      const workSheet = XLSX.utils.json_to_sheet(
+        this.dataSource.data.map((user) => ({
+          name: user.name,
+          picture: user.picture,
+        })),
+        {
+          header: ['name', 'picture'],
+        }
+      );
+      const workBook: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workBook, workSheet, 'SheetName');
+      XLSX.writeFile(workBook, 'userList.xlsx');
     }
   }
 

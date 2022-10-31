@@ -1,5 +1,5 @@
 <div fxFill fxLayout="column">
-  <div fxLayout="row" fxLayoutAlign="end center">
+  <div class="mr-32" fxLayout="row" fxLayoutAlign="end center">
     <app-grid-controls (applyColumnChooser)="onApplyColumnChooser($event)"
                        (clearFilters)="onClearFilters()"
                        (filterClick)="onFilterClick()"
@@ -11,33 +11,44 @@
     ></app-grid-controls>
   </div>
 
-  <table [dataSource]="dataSource" [exampleEntity]="filterEntity" [filterType]="filterType" [formGroup]="filterForm"
-         class="mat-elevation-z8"
-         mat-table matTableFilter>
-    <ng-container matColumnDef="name">
-      <th *matHeaderCellDef [hidden]="!columnSelections.name" mat-header-cell>
-        <span *ngIf="!filterable">Name</span>
-        <mat-form-field *ngIf="filterable" appearance="standard">
-          <input formControlName="name" matInput placeholder="Name">
-        </mat-form-field>
-      </th>
-      <td *matCellDef="let user" [hidden]="!columnSelections.name" mat-cell>{{user.name}}</td>
-    </ng-container>
-    <ng-container matColumnDef="picture">
-      <th *matHeaderCellDef [hidden]="!columnSelections.picture" mat-header-cell>Picture</th>
-      <td *matCellDef="let user" [hidden]="!columnSelections.picture" mat-cell><img [src]="user.picture"
-                                                                                    class="name-picture" mat-card-image>
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="action">
-      <th *matHeaderCellDef [hidden]="!columnSelections.action" mat-header-cell>Action</th>
-      <td *matCellDef="let user" [hidden]="!columnSelections.action" mat-cell>
-        <button [disabled]="!(authService.isLoggedIn$ | async)" color="accent" mat-raised-button>Add friend</button>
-      </td>
-    </ng-container>
-    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-  </table>
+  <div class="mr-32 ml-32">
+    <table [dataSource]="dataSource" [exampleEntity]="filterEntity"
+           [filterType]="filterType"
+           [formGroup]="filterForm"
+           class="mat-elevation-z8"
+           mat-table
+           matSort matTableFilter>
+      <ng-container matColumnDef="name">
+        <th *matHeaderCellDef [hidden]="!columnSelections.name" mat-header-cell mat-sort-header>
+          <span *ngIf="!filterable">Name</span>
+          <mat-form-field *ngIf="filterable" appearance="standard">
+            <input formControlName="name" matInput placeholder="Name">
+          </mat-form-field>
+        </th>
+        <td *matCellDef="let user" [hidden]="!columnSelections.name" mat-cell>{{user.name}}</td>
+      </ng-container>
+      <ng-container matColumnDef="picture">
+        <th *matHeaderCellDef [hidden]="!columnSelections.picture" mat-header-cell>Picture</th>
+        <td *matCellDef="let user" [hidden]="!columnSelections.picture" mat-cell>
+          <img [src]="user.picture"
+               class="name-picture"
+               mat-card-image>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th *matHeaderCellDef [hidden]="!columnSelections.action" mat-header-cell>Action</th>
+        <td *matCellDef="let user" [hidden]="!columnSelections.action" mat-cell>
+          <button [disabled]="!(authService.isLoggedIn$ | async)" color="accent" mat-raised-button>Add friend</button>
+        </td>
+      </ng-container>
+      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
+
+
 </div>
 
 
