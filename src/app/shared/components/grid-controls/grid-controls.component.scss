@@ -1,0 +1,38 @@
+
+:host ::ng-deep .mat-icon-button[disabled] {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+div button {
+  //color: $gray-700;
+
+  &:focus {
+    //color: $blue-500;
+  }
+
+  &:hover {
+    //color: $black;
+  }
+}
+
+.grid-controls {
+  display: flex;
+  justify-content: flex-end;
+  align-content: center;
+  padding: 8px;
+  margin-right: -24px;
+
+  &.without-options {
+    margin-right: -7px;
+  }
+}
+
+.i-small {
+  display: inline;
+}
+
+.mat-icon-button {
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+}

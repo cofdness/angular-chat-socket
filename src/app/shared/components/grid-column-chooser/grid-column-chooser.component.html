@@ -1,0 +1,48 @@
+<button
+  #trigger="matMenuTrigger"
+  [color]="trigger.menuOpen ? 'primary' : ''"
+  [disabled]="disabled"
+  [mat-menu-trigger-for]="columnsMenu"
+  mat-icon-button
+  matTooltip="Column Chooser"
+  matTooltipClass="ipts-tooltip"
+>
+  <mat-icon class="material-icons-outlined">view_column</mat-icon>
+</button>
+<mat-menu #columnsMenu="matMenu" class="menu">
+  <div (click)="$event.stopPropagation()">
+    <div class="menu-title">
+      <strong>Column Picker</strong>
+    </div>
+    <div class="column-selection">
+      <mat-checkbox
+        (change)="setAll($event.checked)"
+        [checked]="allChecked"
+        [indeterminate]="someChecked()"
+        color="primary"
+      >
+        <span class="label">Select All</span>
+      </mat-checkbox>
+    </div>
+    <div *ngFor="let column of columnsCopy">
+      <div class="column-selection">
+        <mat-checkbox
+          (ngModelChange)="column.checked=$event; updateAllChecked()"
+          [disabled]="column.disabled ? true : false "
+          [ngModel]="column.checked"
+          color="primary"
+        ></mat-checkbox>
+        <span>
+          {{ column.label }}
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="filter-buttons">
+    <button (click)="onResetSelections()" color="secondary" mat-stroked-button>Reset</button>
+    <button (click)="onApplySelections()" class="ml-24" color="primary" mat-raised-button>
+      Apply
+    </button>
+  </div>
+</mat-menu>
+

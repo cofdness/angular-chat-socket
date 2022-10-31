@@ -1,0 +1,97 @@
+.menu-title {
+  text-align: left;
+  padding: 16px 16px 0px 16px;
+  //color: $gray-900;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+span {
+  padding-top: 3px;
+}
+
+.column-selection {
+  display: flex;
+  align-items: center;
+  //color: $gray-900;
+  font-size: 14px;
+  font-weight: 400;
+  padding-left: 16px;
+  padding-right: 16px;
+  width: auto;
+  overflow: hidden;
+  margin-bottom: -12px;
+
+  ::ng-deep {
+    .mat-checkbox {
+      padding: 8px 0px 8px 0px;
+      justify-content: flex-end;
+    }
+  }
+}
+
+.filter-buttons {
+  display: flex;
+  padding: 16px 16px 16px;
+  justify-content: space-between;
+
+  .mat-raised-button {
+    &:hover {
+      //background-color: $blue-600;
+    }
+
+    &:focus {
+      //background-color: $blue-500;
+    }
+
+    &:active {
+      //background-color: $blue-300;
+    }
+
+    &[disabled] {
+      //background-color: $gray-300 !important;
+      //color: $gray-500 !important;
+    }
+  }
+
+  .mat-stroked-button {
+    //color: $blue-700;
+    //background-color: $white;
+
+    &:hover {
+      //border: 1px solid $gray-500;
+      //background-color: $blue-700-08;
+    }
+
+    &:focus {
+      //border: 1px solid $gray-500;
+      //background-color: $blue-700-16;
+    }
+
+    &:active {
+      //border: 1px solid $gray-500;
+      //background-color: $blue-700-16;
+    }
+
+    &[disabled] {
+      //color: $gray-500 !important;
+      //background-color: $white !important;
+      //border: 1px solid $gray-400 !important;
+    }
+  }
+}
+
+.mat-icon-button {
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  //color: $gray-700;
+
+  &:focus {
+    //color: $blue-500;
+  }
+
+  &:hover {
+    //color: $black;
+  }
+}
