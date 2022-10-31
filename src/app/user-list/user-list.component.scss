@@ -25,12 +25,10 @@ table {
 .mat-column-name {
   text-align: center;
   font-weight: bold;
-  border-right: 1px solid currentColor;
 }
 
 .mat-column-picture {
   font-size: 20px;
-  border-right: 1px solid currentColor;
   text-align: center;
 }
 
@@ -38,3 +36,25 @@ table {
   text-align: center;
   font-style: italic;
 }
+
+.mr-32 {
+  margin-right: 32px;
+}
+
+.ml-32 {
+  margin-left: 32px;
+}
+
+.mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}
+
+th.mat-header-cell {
+  text-align: center !important;
+}
+
+tr.mat-cell {
+  text-align: center !important;
+}
+
