@@ -22,7 +22,7 @@
         <th *matHeaderCellDef [hidden]="!columnSelections.name" mat-header-cell mat-sort-header>
           <span *ngIf="!filterable">Name</span>
           <mat-form-field *ngIf="filterable" appearance="standard">
-            <input formControlName="name" matInput placeholder="Name">
+            <input (click)="$event.stopPropagation()" formControlName="name" matInput placeholder="Name">
           </mat-form-field>
         </th>
         <td *matCellDef="let user" [hidden]="!columnSelections.name" mat-cell>{{user.name}}</td>
