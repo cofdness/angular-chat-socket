@@ -37,11 +37,11 @@ table {
   font-style: italic;
 }
 
-.mr-32 {
+.grid-lg-mr-32 {
   margin-right: 32px;
 }
 
-.ml-32 {
+.grid-lg-ml-32 {
   margin-left: 32px;
 }
 
@@ -56,5 +56,15 @@ th.mat-header-cell {
 
 tr.mat-cell {
   text-align: center !important;
+}
+
+@media screen and (max-width: 720px) {
+  .grid-lg-mr-32 {
+    margin-right: 0;
+  }
+
+  .grid-lg-ml-32 {
+    margin-left: 0;
+  }
 }
 
