@@ -11,11 +11,10 @@
     ></app-grid-controls>
   </div>
 
-  <div class="grid-lg-ml-32 grid-lg-mr-32">
+  <div class="grid-lg-ml-32 grid-lg-mr-32 mat-elevation-z8">
     <table [dataSource]="dataSource" [exampleEntity]="filterEntity"
            [filterType]="filterType"
            [formGroup]="filterForm"
-           class="mat-elevation-z8"
            mat-table
            matSort matTableFilter>
       <ng-container matColumnDef="name">
@@ -45,7 +44,7 @@
       <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25]" aria-label="Select page of users"></mat-paginator>
   </div>
 
 
